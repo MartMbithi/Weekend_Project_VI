@@ -33,10 +33,10 @@ if (isset($_POST['register'])) {
         VALUES('{$farmer_login_id}', '{$farmer_email}', '{$login_password}', '{$login_rank}')";
 
         $prepare = $mysqli->prepare($sql);
-        $auth_prepare = $mysqli->prepare($sql);
-
-        $prepare->execute();
+        $auth_prepare = $mysqli->prepare($auth);
+        
         $auth_prepare->execute();
+        $prepare->execute();
 
         if ($prepare && $auth_prepare) {
             $success = "Account Created Successfully";
@@ -135,7 +135,7 @@ require_once('../partials/head.php');
                             </div>
                             <div class="form-group col-md-12">
                                 <label>Address</label>
-                                <textarea type="text" name="product_description" rows="2" class="form-control"></textarea>
+                                <textarea type="text" name="farmer_address" rows="2" class="form-control"></textarea>
                             </div>
                         </div>
                         <br>
