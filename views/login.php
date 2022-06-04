@@ -17,24 +17,24 @@ require_once('../partials/head.php');
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>Admin</b>LTE</a>
+            <a href=""><b>Online Farmers Market Platform</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
-                <form action="https://adminlte.io/themes/v3/index3.html" method="post">
+                <form method="post">
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" name="login_name" class="form-control" placeholder="Login Name / Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fas fa-user-tag"></span>
                             </div>
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" name="login_password" class="form-control" placeholder="Login Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -43,41 +43,28 @@ require_once('../partials/head.php');
                     </div>
                     <div class="row">
                         <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
+                            <a href="reset_password">Reset Password</a>
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <button type="submit" name="login" class="btn btn-primary btn-block">Log In</button>
                         </div>
                         <!-- /.col -->
                     </div>
                 </form>
-
+                <hr>
+                <p class="mb-2">
                 <div class="social-auth-links text-center mb-3">
-                    <p>- OR -</p>
-                    <a href="#" class="btn btn-block btn-primary">
-                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                    <a href="sign_up?rank=Farmer" class="btn btn-block btn-primary">
+                        Sign Up As Farmer
                     </a>
-                    <a href="#" class="btn btn-block btn-danger">
-                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                    <a href="sign_up?rank=Customer" class="btn btn-block btn-danger">
+                        Sign Up As Customer
                     </a>
                 </div>
-                <!-- /.social-auth-links -->
-
-                <p class="mb-1">
-                    <a href="forgot-password.html">I forgot my password</a>
-                </p>
-                <p class="mb-0">
-                    <a href="register.html" class="text-center">Register a new membership</a>
-                </p>
             </div>
-            <!-- /.login-card-body -->
         </div>
+        <!-- /.login-card-body -->
     </div>
     <!-- /.login-box -->
 
