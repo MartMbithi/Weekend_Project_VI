@@ -34,16 +34,40 @@ if (isset($_POST['register'])) {
 
         $prepare = $mysqli->prepare($sql);
         $auth_prepare = $mysqli->prepare($auth);
-        
+
         $auth_prepare->execute();
         $prepare->execute();
 
         if ($prepare && $auth_prepare) {
             $success = "Account Created Successfully";
-        }else{
+        } else {
             $err = "Failed!, Please Try Again";
         }
     } else {
+        /* Process Customer Details */
+        $customer_name = mysqli_real_escape_string($mysqli, $_POST['customer_name']);
+        $customer_phone = mysqli_real_escape_string($mysqli, $_POST['customer_phone']);
+        $customer_email = mysqli_real_escape_string($mysqli, $_POST['customer_email']);
+        $customer_login_id  = mysqli_real_escape_string($mysqli, $sys_gen_id_alt_1);
+        $login_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['login_password'])));
+
+        /* Persist */
+        $sql = "INSERT INTO customer (customer_name, customer_phone, customer_email, customer_login_id)
+        VALUES('{$customer_name}', '{$customer_phone}', '{$customer_email}', '{$customer_login_id}')";
+        $auth = "INSERT INTO login(login_id, login_name, login_password, login_rank)
+        VALUES('{$customer_login_id}', '{$customer_email}', '{$login_password}', '{$login_rank}')";
+
+        $prepare = $mysqli->prepare($sql);
+        $auth_prepare = $mysqli->prepare($auth);
+
+        $auth_prepare->execute();
+        $prepare->execute();
+
+        if ($prepare && $auth_prepare) {
+            $success = "Account Created Successfully";
+        } else {
+            $err = "Failed!, Please Try Again";
+        }
     }
 }
 require_once('../partials/head.php');
