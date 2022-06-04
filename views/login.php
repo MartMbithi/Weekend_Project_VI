@@ -41,7 +41,7 @@ if (isset($_POST['register'])) {
         if ($prepare && $auth_prepare) {
             $success = "Account Created Successfully";
         }else{
-            $err = "Failed!, Please Try Again"
+            $err = "Failed!, Please Try Again";
         }
     } else {
     }
