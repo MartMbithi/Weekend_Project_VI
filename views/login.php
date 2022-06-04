@@ -11,6 +11,41 @@
  * can only be MART DEVELOPERS INC.
  *
  */
+session_start();
+require_once('../config/config.php');
+require_once('../config/codeGen.php');
+/* Handle Sign Up */
+if (isset($_POST['register'])) {
+    $login_rank = mysqli_real_escape_string($mysqli, $_POST['login_rank']);
+    /* Process Farmer Sign Up */
+    if ($login_rank == 'Farmer') {
+        $farmer_name = mysqli_real_escape_string($mysqli, $_POST['farmer_name']);
+        $farmer_email = mysqli_real_escape_string($mysqli, $_POST['farmer_email']);
+        $farmer_phone = mysqli_real_escape_string($mysqli, $_POST['farmer_phone']);
+        $farmer_address = mysqli_real_escape_string($mysqli, $_POST['farmer_address']);
+        $farmer_login_id = mysqli_real_escape_string($mysqli, $sys_gen_id);
+        $login_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['login_password'])));
+
+        /*  Persist */
+        $sql = "INSERT INTO farmer(farmer_name, farmer_email, farmer_phone, farmer_address, farmer_login_id) 
+        VALUES('{$farmer_name}', '{$farmer_email}', '{$farmer_phone}', '{$farmer_address}', '{$farmer_login_id}')";
+        $auth = "INSERT INTO login(login_id, login_name, login_password, login_rank)
+        VALUES('{$farmer_login_id}', '{$farmer_email}', '{$login_password}', '{$login_rank}')";
+
+        $prepare = $mysqli->prepare($sql);
+        $auth_prepare = $mysqli->prepare($sql);
+
+        $prepare->execute();
+        $auth_prepare->execute();
+
+        if ($prepare && $auth_prepare) {
+            $success = "Account Created Successfully";
+        }else{
+            $err = "Failed!, Please Try Again"
+        }
+    } else {
+    }
+}
 require_once('../partials/head.php');
 ?>
 
