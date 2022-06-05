@@ -13,7 +13,7 @@
  */
 session_start();
 require_once('../config/config.php');
-if (isset($_POST['confirm_password'])) {
+if (isset($_POST['reset_password'])) {
     $login_email = mysqli_real_escape_string($mysqli, $_SESSION['login_email']);
     $new_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['new_password'])));
     $confirm_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['confirm_password'])));
@@ -41,7 +41,7 @@ require_once('../partials/head.php');
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>Admin</b>LTE</a>
+            <a href=""><b>Online Farmers Market Platform</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
@@ -67,7 +67,7 @@ require_once('../partials/head.php');
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" name="confirm_password" class="btn btn-primary btn-block">Change password</button>
+                            <button type="submit" name="reset_password" class="btn btn-primary btn-block">Change password</button>
                         </div>
                         <!-- /.col -->
                     </div>
