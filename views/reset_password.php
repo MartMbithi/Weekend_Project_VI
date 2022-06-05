@@ -14,14 +14,14 @@
 session_start();
 require_once('../config/config.php');
 if (isset($_POST['reset_password'])) {
-    $loin_email = mysqli_real_escape_string($mysqli, $_POST['login_email']);
+    $login_email = mysqli_real_escape_string($mysqli, $_POST['login_email']);
     /* Check If User Exists */
-    $sql = "SELECT * FROM  login WHERE login_email = '{$login_email}'";
+    $sql = "SELECT * FROM  login WHERE login_name = '{$login_email}'";
     $res = mysqli_query($mysqli, $sql);
     if (mysqli_num_rows($res) > 0) {
         /* Redirect User To Confirm Password */
         $_SESSION['success'] = 'Password Reset Token Generated, Proceed To Confirm Password';
-        $_SESSION['login_email'] = $user_email;
+        $_SESSION['login_email'] = $login_email;
         header('Location: confirm_password');
         exit;
     } else {
