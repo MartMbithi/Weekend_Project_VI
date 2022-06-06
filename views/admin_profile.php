@@ -16,6 +16,38 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
 /* Update Login Details*/
+if (isset($_POST['update_profile'])) {
+    $login_name = mysqli_real_escape_string($mysqli, $_POST['login_name']);
+    $login_id = mysqli_real_escape_string($mysqli, $_SESSION['login_id']);
+    $old_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['old_password'])));
+    $new_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['new_password'])));
+    $confirm_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['confirm_password'])));
+
+    /* Check If Passwords Match */
+    if ($new_password != $confirm_password) {
+        $err  = "Confirmation Passwords Does Not Match";
+    } else {
+        /* Check If Old Password Matches */
+        $sql = "SELECT * FROM  login WHERE login_id = '{$login_id}'";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($old_password != $row['login_password']) {
+                $err =  "Please Enter Correct Old Password";
+            } else {
+                /* Update Login Details */
+                $sql = "UPDATE login SET login_name = '{$login_name}', login_password = '{$confirm_password}' WHERE login_id = '{$login_id}'";
+                $prepare = $mysqli->prepare($sql);
+                $prepare->execute();
+                if ($prepare) {
+                    $success  = "Authentication Details Updated";
+                } else {
+                    $err  = "Failed!, Please Try Again";
+                }
+            }
+        }
+    }
+}
 require_once('../partials/head.php');
 ?>
 
@@ -72,15 +104,15 @@ require_once('../partials/head.php');
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label for="">Old Password</label>
-                                                    <input type="password" required name="old_password"  class="form-control">
+                                                    <input type="password" required name="old_password" class="form-control">
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label for="">New Password</label>
-                                                    <input type="password" required name="new_password"  class="form-control">
+                                                    <input type="password" required name="new_password" class="form-control">
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label for="">Confirm New Password</label>
-                                                    <input type="password" required name="confirm_password"  class="form-control">
+                                                    <input type="password" required name="confirm_password" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="text-right">
