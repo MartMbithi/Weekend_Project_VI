@@ -31,8 +31,38 @@ if (isset($_POST['add_category'])) {
         $err = "Failed!, Please Try Again";
     }
 }
+
 /* Update Category */
+if (isset($_POST['update_category'])) {
+    $category_id = mysqli_real_escape_string($mysqli, $_POST['category_id']);
+    $category_name  = mysqli_real_escape_string($mysqli, $_POST['category_name']);
+    $category_desc = mysqli_real_escape_string($mysqli, $_POST['category_desc']);
+
+    /* Persist */
+    $sql = "UPDATE categories SET category_name = '{$category_name}', category_desc = '{$category_desc}' WHERE category_id = '{$category_id}'";
+    $preare = $mysqli->prepare($sql);
+    $preare->execute();
+    if ($preare) {
+        $success = "$category_name Updated";
+    } else {
+        $err = "Failed!, Please Try Again";
+    }
+}
+
 /* Delete Category */
+if (isset($_POST['delete_category'])) {
+    $category_id = mysqli_real_escape_string($mysqli, $_POST['category_id']);
+
+    /* Persist */
+    $sql = "DELETE FROM categories WHERE category_id = '{$category_id}'";
+    $prepare = $mysqli->prepare($sql);
+    $preare->execute();
+    if ($prepare) {
+        $success = "Product Category Deleted";
+    } else {
+        $err = "Failed Please Try Again";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
