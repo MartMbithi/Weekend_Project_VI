@@ -191,6 +191,8 @@ require_once('../partials/head.php');
                                                     <td><?php echo $farmer->farmer_phone; ?></td>
                                                     <td><?php echo $farmer->farmer_address; ?></td>
                                                     <td>
+                                                        <a data-toggle="modal" href="#update_<?php echo $farmer->farmer_id; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-user-edit"></em> Edit</a>
+                                                        <a data-toggle="modal" href="#delete_<?php echo $farmer->farmer_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete</a>
 
                                                     </td>
 
