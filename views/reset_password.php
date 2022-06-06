@@ -31,16 +31,16 @@ if (isset($_POST['reset_password'])) {
 require_once('../partials/head.php');
 ?>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-image: url('../public/images/background.jpg'); background-repeat: no-repeat; background-size: cover; ">
     <div class="login-box">
-        <div class="login-logo">
-            <a href=""><b>Online Farmers Market Platform</a>
-        </div>
-        <!-- /.login-logo -->
-        <div class="card">
-            <div class="card-body login-card-body">
-                <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
 
+        <div class="card">
+            <div class="card-body login-card-body border border-success">
+                <div class="login-logo">
+                    <a href="" class="text-dark"><b>Online Farmers Market Platform</a>
+                </div>
+                <hr>
+                <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
                 <form method="post">
                     <div class="input-group mb-3">
                         <input type="email" required name="login_email" class="form-control" placeholder="Login Email">

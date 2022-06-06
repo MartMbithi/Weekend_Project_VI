@@ -99,14 +99,14 @@ if (isset($_POST['login'])) {
 require_once('../partials/head.php');
 ?>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-image: url('../public/images/background.jpg'); background-repeat: no-repeat; background-size: cover; ">
     <div class="login-box">
         <div class="login-logo">
-            <a href=""><b>Online Farmers Market Platform</a>
+            <a href="" class="text-light"><b>Online Farmers Market Platform</a>
         </div>
         <!-- /.login-logo -->
-        <div class="card">
-            <div class="card-body login-card-body">
+        <div class="card ">
+            <div class="card-body login-card-body border border-success">
                 <p class="login-box-msg">Sign in to start your session</p>
 
                 <form method="post">
@@ -141,10 +141,10 @@ require_once('../partials/head.php');
                 <p class="mb-2">
                 <div class="social-auth-links text-center mb-3">
                     <a data-toggle="modal" href="#farmer_signup" class="btn btn-block btn-primary">
-                        Sign Up As Farmer
+                        Register Farmer Account
                     </a>
                     <a data-toggle="modal" href="#customer_signup" class="btn btn-block btn-danger">
-                        Sign Up As Customer
+                        Register Customer Account
                     </a>
                 </div>
             </div>

@@ -38,14 +38,15 @@ require_once('../partials/head.php');
 
 ?>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-image: url('../public/images/background.jpg'); background-repeat: no-repeat; background-size: cover; ">
     <div class="login-box">
-        <div class="login-logo">
-            <a href=""><b>Online Farmers Market Platform</a>
-        </div>
         <!-- /.login-logo -->
         <div class="card">
-            <div class="card-body login-card-body">
+            <div class="card-body login-card-body border border-success">
+                <div class="login-logo">
+                    <a href="" class="text-dark"><b>Online Farmers Market Platform</a>
+                </div>
+                <hr>
                 <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
 
                 <form method="post">
