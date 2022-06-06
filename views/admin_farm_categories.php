@@ -56,7 +56,7 @@ if (isset($_POST['delete_category'])) {
     /* Persist */
     $sql = "DELETE FROM categories WHERE category_id = '{$category_id}'";
     $prepare = $mysqli->prepare($sql);
-    $preare->execute();
+    $prepare->execute();
     if ($prepare) {
         $success = "Product Category Deleted";
     } else {
@@ -219,7 +219,7 @@ require_once('../partials/head.php');
                                                                     <!-- Hide This -->
                                                                     <input type="hidden" name="category_id" value="<?php echo $category->category_id; ?>">
                                                                     <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                    <button type="submit" class="text-center btn btn-danger" name="delete_farmer">Delete</button>
+                                                                    <button type="submit" class="text-center btn btn-danger" name="delete_category">Delete</button>
                                                                 </div>
                                                             </form>
                                                         </div>
