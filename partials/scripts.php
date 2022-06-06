@@ -10,6 +10,8 @@
  <script src="../public/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
  <!-- AdminLTE App -->
  <script src="dist/js/adminlte.js"></script>
+ <!-- Select2 -->
+ <script src="../public/plugins/select2/js/select2.full.min.js"></script>
  <!-- Data Tables CDN -->
  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
@@ -28,6 +30,7 @@
  </script>
 
  <script>
+     $('.select2').select2()
      /* Initialize Data Tables */
      $(document).ready(function() {
          $('.table').DataTable();

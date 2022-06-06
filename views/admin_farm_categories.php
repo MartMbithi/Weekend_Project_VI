@@ -87,7 +87,7 @@ require_once('../partials/head.php');
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="admin_home">Home</a></li>
-                                <li class="breadcrumb-item"><a href="admin_home">Users</a></li>
+                                <li class="breadcrumb-item"><a href="admin_home">Farm Products</a></li>
                                 <li class="breadcrumb-item active">Product Categories</li>
                             </ol>
                         </div>

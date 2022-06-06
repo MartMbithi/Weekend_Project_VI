@@ -51,7 +51,21 @@ if (isset($_POST['update_product'])) {
         $err = "Failed!, Please Try Again";
     }
 }
+
 /* Delete Products */
+if (isset($_POST['delete_product'])) {
+    $product_id = mysqli_real_escape_string($mysqli, $_POST['product_id']);
+
+    /* Persist */
+    $sql = "DELETE FROM products WHERE product_id = '{$product_id}'";
+    $prepare = $mysqli->prepare($sql);
+    $prepare->execute();
+    if ($prepare) {
+        $success = "Product Deleted";
+    } else {
+        $err = "Failed!, Please Try Again";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
@@ -71,13 +85,13 @@ require_once('../partials/head.php');
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Product categories</h1>
+                            <h1>Products</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="admin_home">Home</a></li>
-                                <li class="breadcrumb-item"><a href="admin_home">Users</a></li>
-                                <li class="breadcrumb-item active">Product Categories</li>
+                                <li class="breadcrumb-item"><a href="admin_home">Farm Products</a></li>
+                                <li class="breadcrumb-item active">Products</li>
                             </ol>
                         </div>
                     </div>
@@ -92,7 +106,7 @@ require_once('../partials/head.php');
                             <div class="card card-primary card-outline">
                                 <div class="card-header p-2">
                                     <h3 class="text-right">
-                                        <button type="button" data-toggle="modal" data-target="#add_modal" class="btn btn-success"> Register New Product Category</button>
+                                        <button type="button" data-toggle="modal" data-target="#add_modal" class="btn btn-success"> Register New Product</button>
                                     </h3>
                                 </div><!-- /.card-header -->
                                 <!-- Add Category Modal -->
@@ -108,19 +122,34 @@ require_once('../partials/head.php');
                                             <div class="modal-body">
                                                 <form method="post" enctype="multipart/form-data">
                                                     <div class="form-row">
-                                                        <div class="form-group col-md-12">
+                                                        <div class="form-group col-md-6">
+                                                            <label>Product Name</label>
+                                                            <input type="text" name="product_name" required class="form-control">
+                                                        </div>
+                                                        <div class="form-group col-md-6">
                                                             <label>Category Name</label>
-                                                            <input type="text" name="category_name" required class="form-control">
+                                                            <select type="text" name="product_category_id" required class="form-control">
+                                                                <option>Select Category</option>
+                                                                <?php
+                                                                $ret = "SELECT * FROM categories";
+                                                                $stmt = $mysqli->prepare($ret);
+                                                                $stmt->execute(); //ok
+                                                                $res = $stmt->get_result();
+                                                                while ($category = $res->fetch_object()) {
+                                                                ?>
+                                                                    <option value="<?php echo $category->category_id; ?>"><?php echo $category->category_name; ?></option>
+                                                                <?php } ?>
+                                                            </select>
                                                         </div>
                                                         <div class="form-group col-md-12">
-                                                            <label>Category Details</label>
-                                                            <textarea type="text" name="category_desc" rows="2" class="form-control"></textarea>
+                                                            <label>Product Details</label>
+                                                            <textarea type="text" name="product_desc" rows="2" class="form-control"></textarea>
                                                         </div>
                                                     </div>
                                                     <br>
                                                     <div class="text-right">
-                                                        <button name="add_category" class="btn btn-primary" type="submit">
-                                                            Register Product Category
+                                                        <button name="add_product" class="btn btn-primary" type="submit">
+                                                            Register Product
                                                         </button>
                                                     </div>
                                                 </form>
@@ -132,31 +161,34 @@ require_once('../partials/head.php');
                                     <table class="table table-bordered text-truncate" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
+                                                <th>Product Name</th>
                                                 <th>Category Name</th>
-                                                <th>Category Details</th>
+                                                <th>Product Details</th>
                                                 <th>Manage</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $ret = "SELECT * FROM categories";
+                                            $ret = "SELECT * FROM products p 
+                                            INNER JOIN categories c ON c.category_id  = p.product_category_id";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
-                                            while ($category = $res->fetch_object()) {
+                                            while ($product = $res->fetch_object()) {
                                             ?>
                                                 <tr>
-                                                    <td><?php echo $category->category_name; ?></td>
-                                                    <td><?php echo $category->category_desc; ?></td>
+                                                    <td><?php echo $product->product_name; ?></td>
+                                                    <td><?php echo $product->category_name; ?></td>
+                                                    <td><?php echo $product->product_desc; ?></td>
                                                     <td>
-                                                        <a data-toggle="modal" href="#update_<?php echo $category->category_id; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-edit"></em> Edit</a>
-                                                        <a data-toggle="modal" href="#delete_<?php echo $category->category_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete</a>
+                                                        <a data-toggle="modal" href="#update_<?php echo $product->product_id; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-edit"></em> Edit</a>
+                                                        <a data-toggle="modal" href="#delete_<?php echo $product->product_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete</a>
 
                                                     </td>
 
                                                 </tr>
                                                 <!-- Manage Category Modals -->
-                                                <div class="modal fade" id="update_<?php echo $category->category_id; ?>">
+                                                <div class="modal fade" id="update_<?php echo $product->product_id; ?>">
                                                     <div class="modal-dialog modal-dialog-centered  modal-lg">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -168,20 +200,35 @@ require_once('../partials/head.php');
                                                             <div class="modal-body">
                                                                 <form method="post" enctype="multipart/form-data">
                                                                     <div class="form-row">
-                                                                        <div class="form-group col-md-12">
+                                                                        <div class="form-group col-md-6">
+                                                                            <label>Product Name</label>
+                                                                            <input type="hidden" name="product_id" value="<?php echo $product->product_id; ?>" required class="form-control">
+                                                                            <input type="text" name="product_name" value="<?php echo $product->product_name; ?>" required class="form-control">
+                                                                        </div>
+                                                                        <div class="form-group col-md-6">
                                                                             <label>Category Name</label>
-                                                                            <input type="hidden" name="category_id" value="<?php echo $category->category_id; ?>" required class="form-control">
-                                                                            <input type="text" name="category_name" value="<?php echo $category->category_name; ?>" required class="form-control">
+                                                                            <select type="text" name="product_category_id" required class="form-control">
+                                                                                <option value="<?php echo $product->category_id; ?>"><?php echo $category->category_name; ?></option>
+                                                                                <?php
+                                                                                $sql = "SELECT * FROM categories";
+                                                                                $stmt_1 = $mysqli->prepare($sql);
+                                                                                $stmt_1->execute(); //ok
+                                                                                $result = $stmt_1->get_result();
+                                                                                while ($category = $result->fetch_object()) {
+                                                                                ?>
+                                                                                    <option value="<?php echo $category->category_id; ?>"><?php echo $category->category_name; ?></option>
+                                                                                <?php } ?>
+                                                                            </select>
                                                                         </div>
                                                                         <div class="form-group col-md-12">
-                                                                            <label>Category Details</label>
-                                                                            <textarea type="text" name="category_desc" rows="2" class="form-control"><?php echo $category->category_desc; ?></textarea>
+                                                                            <label>Product Details</label>
+                                                                            <textarea type="text" name="product_desc" rows="2" class="form-control"><?php echo $product->product_desc; ?></textarea>
                                                                         </div>
                                                                     </div>
                                                                     <br>
                                                                     <div class="text-right">
-                                                                        <button name="update_category" class="btn btn-primary" type="submit">
-                                                                            Update Product Category
+                                                                        <button name="update_product" class="btn btn-primary" type="submit">
+                                                                            Update Product
                                                                         </button>
                                                                     </div>
                                                                 </form>
@@ -190,7 +237,7 @@ require_once('../partials/head.php');
                                                     </div>
                                                 </div>
                                                 <!-- Delete Modal -->
-                                                <div class="modal fade" id="delete_<?php echo $category->category_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="delete_<?php echo $product->product_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -202,13 +249,13 @@ require_once('../partials/head.php');
                                                             <form method="POST">
                                                                 <div class="modal-body text-center ">
                                                                     <h4 class="text-danger">
-                                                                        Delete <?php echo  $category->category_name; ?> Account?
+                                                                        Delete <?php echo  $product->product_name; ?> Account?
                                                                     </h4>
                                                                     <br>
                                                                     <!-- Hide This -->
-                                                                    <input type="hidden" name="category_id" value="<?php echo $category->category_id; ?>">
+                                                                    <input type="hidden" name="product_id" value="<?php echo $product->product_id; ?>">
                                                                     <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                    <button type="submit" class="text-center btn btn-danger" name="delete_category">Delete</button>
+                                                                    <button type="submit" class="text-center btn btn-danger" name="delete_product">Delete</button>
                                                                 </div>
                                                             </form>
                                                         </div>
