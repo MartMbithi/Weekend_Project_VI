@@ -31,6 +31,7 @@
      /* Initialize Data Tables */
      $(document).ready(function() {
          $('.table').DataTable();
+         $('.table td').css('white-space', 'initial');
      });
 
      $(document).ready(function() {
