@@ -167,6 +167,41 @@ require_once('../partials/head.php');
                                     </div>
                                 </div>
                                 <div class="card-body">
+                                    <table class="table table-bordered text-truncate" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th>Contacts</th>
+                                                <th>Address</th>
+                                                <th>Manage</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $ret = "SELECT * FROM farmer";
+                                            $stmt = $mysqli->prepare($ret);
+                                            $stmt->execute(); //ok
+                                            $res = $stmt->get_result();
+                                            while ($farmer = $res->fetch_object()) {
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $farmer->farmer_name; ?></td>
+                                                    <td><?php echo $farmer->farmer_email; ?></td>
+                                                    <td><?php echo $farmer->farmer_phone; ?></td>
+                                                    <td><?php echo $farmer->farmer_address; ?></td>
+                                                    <td>
+
+                                                    </td>
+
+                                                </tr>
+                                                <!-- Manage Farmer Modals -->
+
+                                            <?php
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
 
                                 </div><!-- /.card-body -->
                             </div>
