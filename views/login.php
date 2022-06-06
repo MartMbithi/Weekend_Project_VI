@@ -84,8 +84,14 @@ if (isset($_POST['login'])) {
     $rs = $stmt->fetch();
     /* Determiner Where To Redirect Based On Access Leveles */
     if ($rs && $login_rank == 'Admin') {
+        $_SESSION['success'] = 'Password Reset, Proceed To Login';
+        header('Location: admin_home');
     } else if ($rs && $login_rank == 'Farmer') {
+        $_SESSION['success'] = 'Password Reset, Proceed To Login';
+        header('Location: farmer_home');
     } else if ($rs && $login_rank == 'Customer') {
+        $_SESSION['success'] = 'Password Reset, Proceed To Login';
+        header('Location: customer_home');
     } else {
         $err = "Failed!, Incorrect Login Credentials";
     }
