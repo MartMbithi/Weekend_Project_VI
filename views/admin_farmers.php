@@ -63,7 +63,20 @@ if (isset($_POST['update_farmer'])) {
         $err  = "Failed!, Please Try Again";
     }
 }
+
 /* Delete Farmer */
+if (isset($_POST['delete_farmer'])) {
+    $farmer_login_id = mysqli_real_escape_string($mysqli, $_POST['farmer_login_id']);
+    /* Persist */
+    $sql = "DELETE FROM login WHERE login_id = '{$farmer_login_id}'";
+    $prepare = $mysqli->prepare($sql);
+    $prepare->execute();
+    if ($prepare) {
+        $success = "Farmer Account Deleted";
+    } else {
+        $err = "Failed!, Please Try Again";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
