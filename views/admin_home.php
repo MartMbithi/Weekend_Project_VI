@@ -54,7 +54,7 @@ require_once('../partials/head.php');
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box">
-                                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-user-tag"></i></span>
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users"></i></span>
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Customers</span>
@@ -69,7 +69,7 @@ require_once('../partials/head.php');
                         <!-- /.col -->
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
-                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-users"></i></span>
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user-tag"></i></span>
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Farmers</span>
@@ -83,7 +83,18 @@ require_once('../partials/head.php');
 
                         <!-- fix for small devices only -->
                         <div class="clearfix hidden-md-up"></div>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-list"></i></span>
 
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Farm Product Categories</span>
+                                    <span class="info-box-number">2,000</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
                                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-carrot"></i></span>
@@ -97,22 +108,11 @@ require_once('../partials/head.php');
                             <!-- /.info-box -->
                         </div>
                         <!-- /.col -->
-                        <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Farm Product Categories</span>
-                                    <span class="info-box-number">2,000</span>
-                                </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
-                        </div>
 
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Unpaid Orders</span>
@@ -124,7 +124,7 @@ require_once('../partials/head.php');
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Paid Orders</span>
@@ -136,7 +136,7 @@ require_once('../partials/head.php');
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clipboard-list"></i></span>
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Total Orders</span>
@@ -148,7 +148,7 @@ require_once('../partials/head.php');
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill-alt"></i></span>
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Overall Income</span>
