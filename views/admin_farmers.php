@@ -14,6 +14,7 @@
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
+require_once('../config/codeGen.php');
 check_login();
 /* Add Farmer */
 if (isset($_POST['register_farmer'])) {
