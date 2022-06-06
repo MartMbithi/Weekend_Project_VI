@@ -6,6 +6,10 @@
  <script src="../public/js/adminlte.min.js"></script>
  <!-- SweetAlert2 -->
  <script src="../public/plugins/sweetalert2/sweetalert2.min.js"></script>
+ <!-- overlayScrollbars -->
+ <script src="../public/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+ <!-- AdminLTE App -->
+ <script src="dist/js/adminlte.js"></script>
  <!-- Toastr -->
  <script src="../public/plugins/toastr/toastr.min.js"></script>
  <script>

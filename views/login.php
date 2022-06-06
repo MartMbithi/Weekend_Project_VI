@@ -82,6 +82,9 @@ if (isset($_POST['login'])) {
     $stmt->execute();
     $stmt->bind_result($login_id, $login_name, $login_password, $login_rank);
     $rs = $stmt->fetch();
+    /* Persist Sessions */
+    $_SESSION['login_id'] = $login_id;
+
     /* Determiner Where To Redirect Based On Access Leveles */
     if ($rs && $login_rank == 'Admin') {
         $_SESSION['success'] = 'Password Reset, Proceed To Login';
