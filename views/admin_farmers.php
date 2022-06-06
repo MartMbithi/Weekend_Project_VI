@@ -198,7 +198,47 @@ require_once('../partials/head.php');
 
                                                 </tr>
                                                 <!-- Manage Farmer Modals -->
-
+                                                <div class="modal fade" id="update_<?php echo $farmer->farmer_id; ?>">
+                                                    <div class="modal-dialog modal-dialog-centered  modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Register New Farmer Account - Fill All Required Fields </h4>
+                                                                <button type="button" class="close" data-dismiss="modal">
+                                                                    <span>&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form method="post" enctype="multipart/form-data">
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-12">
+                                                                            <label>Full Name</label>
+                                                                            <input type="text" name="farmer_name" value="<?php echo $farmer->farmer_name; ?>" required class="form-control">
+                                                                            <input type="hidden" value="<?php echo $farmer->farmer_id; ?>" name="farmer_id" required class="form-control">
+                                                                        </div>
+                                                                        <div class="form-group col-md-6">
+                                                                            <label>Email</label>
+                                                                            <input type="email" name="farmer_email" value="<?php echo $farmer->farmer_email; ?>" required class="form-control">
+                                                                        </div>
+                                                                        <div class="form-group col-md-6">
+                                                                            <label>Phone Number</label>
+                                                                            <input type="text" name="farmer_phone" value="<?php echo $farmer->farmer_phone; ?>" required class="form-control">
+                                                                        </div>
+                                                                        <div class="form-group col-md-12">
+                                                                            <label>Address</label>
+                                                                            <textarea type="text" name="farmer_address" rows="2" class="form-control"><?php echo $farmer->farmer_address; ?></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="text-right">
+                                                                        <button name="update_farmer" class="btn btn-primary" type="submit">
+                                                                            Update Farmer Account
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             <?php
                                             }
                                             ?>
