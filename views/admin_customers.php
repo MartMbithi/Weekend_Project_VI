@@ -64,6 +64,19 @@ if (isset($_POST['update_customer'])) {
 }
 
 /* Delete Customer */
+if (isset($_POST['delete_customer'])) {
+    $customer_login_id = mysqli_real_escape_string($mysqli, $_POST['customer_login_id']);
+
+    /* Prepare */
+    $sql = "DELETE FROM login WHERE login_id = '{$customer_login_id}'";
+    $prepare = $mysqli->prepare($sql);
+    $prepare->execute();
+    if ($prepare) {
+        $success = "Customer Account Deleted";
+    } else {
+        $err = "Failed!, Please Try Again";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
