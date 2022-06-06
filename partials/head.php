@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="../public/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <!-- Toastr -->
     <link rel="stylesheet" href="../public/plugins/toastr/toastr.min.css">
+    <!-- Data Tables CDN-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" />
     <?php
     /* Alert Sesion Via Alerts */
     if (isset($_SESSION['success'])) {

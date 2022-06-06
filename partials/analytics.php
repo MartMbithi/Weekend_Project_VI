@@ -28,7 +28,7 @@ $stmt->close();
 $query = "SELECT COUNT(*)  FROM `farmer`";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
-$stmt->bind_result($farmer);
+$stmt->bind_result($farmers);
 $stmt->fetch();
 $stmt->close();
 
@@ -68,7 +68,7 @@ $stmt->close();
 $query = "SELECT COUNT(*)  FROM `order` ";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
-$stmt->bind_result($products);
+$stmt->bind_result($orders);
 $stmt->fetch();
 $stmt->close();
 
