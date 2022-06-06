@@ -203,7 +203,7 @@ require_once('../partials/head.php');
                                                     <div class="modal-dialog modal-dialog-centered  modal-lg">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h4 class="modal-title">Register New Farmer Account - Fill All Required Fields </h4>
+                                                                <h4 class="modal-title">Update Farmer Account - Fill All Required Fields </h4>
                                                                 <button type="button" class="close" data-dismiss="modal">
                                                                     <span>&times;</span>
                                                                 </button>

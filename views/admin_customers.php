@@ -121,7 +121,7 @@ require_once('../partials/head.php');
                                     </h3>
                                 </div><!-- /.card-header -->
                                 <!-- Add Customer Account -->
-                                <div class="modal fade" id="customer_signup">
+                                <div class="modal fade" id="add_modal">
                                     <div class="modal-dialog modal-dialog-centered  modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -170,36 +170,34 @@ require_once('../partials/head.php');
                                                 <th>Full Name</th>
                                                 <th>Email</th>
                                                 <th>Contacts</th>
-                                                <th>Address</th>
                                                 <th>Manage</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $ret = "SELECT * FROM farmer";
+                                            $ret = "SELECT * FROM customer";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
-                                            while ($farmer = $res->fetch_object()) {
+                                            while ($customer = $res->fetch_object()) {
                                             ?>
                                                 <tr>
-                                                    <td><?php echo $farmer->farmer_name; ?></td>
-                                                    <td><?php echo $farmer->farmer_email; ?></td>
-                                                    <td><?php echo $farmer->farmer_phone; ?></td>
-                                                    <td><?php echo $farmer->farmer_address; ?></td>
+                                                    <td><?php echo $customer->customer_name; ?></td>
+                                                    <td><?php echo $customer->customer_email; ?></td>
+                                                    <td><?php echo $customer->customer_phone; ?></td>
                                                     <td>
-                                                        <a data-toggle="modal" href="#update_<?php echo $farmer->farmer_id; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-user-edit"></em> Edit</a>
-                                                        <a data-toggle="modal" href="#delete_<?php echo $farmer->farmer_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete</a>
+                                                        <a data-toggle="modal" href="#update_<?php echo $customer->customer_id; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-user-edit"></em> Edit</a>
+                                                        <a data-toggle="modal" href="#delete_<?php echo $customer->customer_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete</a>
 
                                                     </td>
 
                                                 </tr>
                                                 <!-- Manage Farmer Modals -->
-                                                <div class="modal fade" id="update_<?php echo $farmer->farmer_id; ?>">
+                                                <div class="modal fade" id="update_<?php echo $customer->customer_id; ?>">
                                                     <div class="modal-dialog modal-dialog-centered  modal-lg">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h4 class="modal-title">Register New Farmer Account - Fill All Required Fields </h4>
+                                                                <h4 class="modal-title">Update Customer Account - Fill All Required Fields </h4>
                                                                 <button type="button" class="close" data-dismiss="modal">
                                                                     <span>&times;</span>
                                                                 </button>
@@ -209,26 +207,22 @@ require_once('../partials/head.php');
                                                                     <div class="form-row">
                                                                         <div class="form-group col-md-12">
                                                                             <label>Full Name</label>
-                                                                            <input type="text" name="farmer_name" value="<?php echo $farmer->farmer_name; ?>" required class="form-control">
-                                                                            <input type="hidden" value="<?php echo $farmer->farmer_id; ?>" name="farmer_id" required class="form-control">
+                                                                            <input type="text" name="customer_name" value="<?php echo $customer->customer_name; ?>" required class="form-control">
+                                                                            <input type="hidden" value="<?php echo $customer->customer_id; ?>" name="customer_id" required class="form-control">
                                                                         </div>
                                                                         <div class="form-group col-md-6">
                                                                             <label>Email</label>
-                                                                            <input type="email" name="farmer_email" value="<?php echo $farmer->farmer_email; ?>" required class="form-control">
+                                                                            <input type="email" name="customer_email" value="<?php echo $customer->customer_email; ?>" required class="form-control">
                                                                         </div>
                                                                         <div class="form-group col-md-6">
                                                                             <label>Phone Number</label>
-                                                                            <input type="text" name="farmer_phone" value="<?php echo $farmer->farmer_phone; ?>" required class="form-control">
-                                                                        </div>
-                                                                        <div class="form-group col-md-12">
-                                                                            <label>Address</label>
-                                                                            <textarea type="text" name="farmer_address" rows="2" class="form-control"><?php echo $farmer->farmer_address; ?></textarea>
+                                                                            <input type="text" name="customer_phone" value="<?php echo $customer->customer_phone; ?>" required class="form-control">
                                                                         </div>
                                                                     </div>
                                                                     <br>
                                                                     <div class="text-right">
-                                                                        <button name="update_farmer" class="btn btn-primary" type="submit">
-                                                                            Update Farmer Account
+                                                                        <button name="update_customer" class="btn btn-primary" type="submit">
+                                                                            Update Customer Account
                                                                         </button>
                                                                     </div>
                                                                 </form>
@@ -237,7 +231,7 @@ require_once('../partials/head.php');
                                                     </div>
                                                 </div>
                                                 <!-- Delete Modal -->
-                                                <div class="modal fade" id="delete_<?php echo $farmer->farmer_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="delete_<?php echo $customer->customer_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -249,13 +243,13 @@ require_once('../partials/head.php');
                                                             <form method="POST">
                                                                 <div class="modal-body text-center ">
                                                                     <h4 class="text-danger">
-                                                                        Delete <?php echo  $farmer->farmer_name; ?> Account?
+                                                                        Delete <?php echo  $customer->customer_name; ?> Account?
                                                                     </h4>
                                                                     <br>
                                                                     <!-- Hide This -->
-                                                                    <input type="hidden" name="farmer_login_id" value="<?php echo $farmer->farmer_login_id; ?>">
+                                                                    <input type="hidden" name="customer_login_id" value="<?php echo $customer->customer_login_id; ?>">
                                                                     <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                    <button type="submit" class="text-center btn btn-danger" name="delete_farmer">Delete</button>
+                                                                    <button type="submit" class="text-center btn btn-danger" name="delete_customer">Delete</button>
                                                                 </div>
                                                             </form>
                                                         </div>
