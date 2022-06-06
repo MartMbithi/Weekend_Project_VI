@@ -87,14 +87,17 @@ if (isset($_POST['login'])) {
 
     /* Determiner Where To Redirect Based On Access Leveles */
     if ($rs && $login_rank == 'Admin') {
-        $_SESSION['success'] = 'Password Reset, Proceed To Login';
+        $_SESSION['success'] = 'Successfully Logged In To Admin Dashboard';
         header('Location: admin_home');
+        exit;
     } else if ($rs && $login_rank == 'Farmer') {
-        $_SESSION['success'] = 'Password Reset, Proceed To Login';
+        $_SESSION['success'] = 'Successfully Logged In To Farmer Dashboard';
         header('Location: farmer_home');
+        exit;
     } else if ($rs && $login_rank == 'Customer') {
-        $_SESSION['success'] = 'Password Reset, Proceed To Login';
+        $_SESSION['success'] = 'Successfully Logged In To Customer Dashboard';
         header('Location: customer_home');
+        exit;
     } else {
         $err = "Failed!, Incorrect Login Credentials";
     }

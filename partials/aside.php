@@ -130,6 +130,14 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="logout" class="nav-link">
+                        <i class="nav-icon fas fa-power-off"></i>
+                        <p>
+                            Log Out
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
