@@ -70,6 +70,26 @@ if (isset($_POST['register'])) {
         }
     }
 }
+
+/* Handle Login */
+if (isset($_POST['login'])) {
+    $login_name = mysqli_real_escape_string($mysqli, $_POST['login_name']);
+    $login_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['login_password'])));
+
+    /* Persist */
+    $stmt = $mysqli->prepare("SELECT login_id, login_name, login_password, login_rank 
+    FROM login WHERE login_name = '{$login_name}' AND login_password= '{$login_password}'");
+    $stmt->execute();
+    $stmt->bind_result($login_id, $login_name, $login_password, $login_rank);
+    $rs = $stmt->fetch();
+    /* Determiner Where To Redirect Based On Access Leveles */
+    if ($rs && $login_rank == 'Admin') {
+    } else if ($rs && $login_rank == 'Farmer') {
+    } else if ($rs && $login_rank == 'Customer') {
+    } else {
+        $err = "Failed!, Incorrect Login Credentials";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
