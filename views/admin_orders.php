@@ -36,6 +36,19 @@ if (isset($_POST['add_order'])) {
     }
 }
 /* Delete Order */
+if (isset($_POST['delete_order'])) {
+    $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
+
+    /* Persist */
+    $sql = "DELETE FROM `order` WHERE order_id = '{$order_id}'";
+    $prepare = $mysqli->prepare($sql);
+    $prepare->execute();
+    if ($prepare) {
+        $success = "Order Deleted";
+    } else {
+        $err = "Failed!, Please Try Again";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
@@ -176,6 +189,31 @@ require_once('../partials/head.php');
                                                         <a data-toggle="modal" href="#delete_<?php echo $orders->order_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete Order</a>
                                                     </td>
                                                 </tr>
+                                                <!-- Modals -->
+                                                <div class="modal fade" id="delete_<?php echo $orders->order_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">CONFIRM DELETE</h5>
+                                                                <button type="button" class="close" data-dismiss="modal">
+                                                                    <span>&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form method="POST">
+                                                                <div class="modal-body text-center ">
+                                                                    <h4 class="text-danger">
+                                                                        Delete Order <?php echo  $orders->order_ref; ?>? </h4>
+                                                                    <br>
+                                                                    <!-- Hide This -->
+                                                                    <input type="hidden" name="order_id" value="<?php echo $orders->order_id; ?>">
+                                                                    <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                    <button type="submit" class="text-center btn btn-danger" name="delete_order">Delete</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Modals -->
                                             <?php
                                             }
                                             ?>
