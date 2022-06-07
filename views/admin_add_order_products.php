@@ -25,7 +25,15 @@ if (!empty($_GET["action"])) {
             if (!empty($_POST["quantity"])) {
                 $productByCode = $db_handle->runQuery("SELECT * FROM products p INNER JOIN farmer_products fp 
                 ON fp.farmer_product_product_id = p.product_id WHERE p.product_name ='" . $_GET["product_name"] . "'");
-                $itemArray = array($productByCode[0]["product_name"] => array('product_name' => $productByCode[0]["product_name"],  'quantity' => $_POST["quantity"], 'price' => $productByCode[0]["farmer_product_price"], 'image' => $productByCode[0]["farmer_product_image"]));
+                $itemArray = array(
+                    $productByCode[0]["product_name"] =>
+                    array(
+                        'product_name' => $productByCode[0]["product_name"],
+                        'quantity' => $_POST["quantity"],
+                        'price' => $productByCode[0]["farmer_product_price"],
+                        'farmer_product_id' => $productByCode[0]["farmer_product_id"]
+                    )
+                );
 
                 if (!empty($_SESSION["cart_item"])) {
                     if (in_array($productByCode[0]["product_name"], array_keys($_SESSION["cart_item"]))) {
@@ -58,6 +66,35 @@ if (!empty($_GET["action"])) {
         case "empty":
             unset($_SESSION["cart_item"]);
             break;
+    }
+}
+/* Persist Order */
+if (isset($_POST['add_customer_order'])) {
+    $cart_products = $_SESSION["cart_item"];
+    foreach ($cart_products as $cart_products) {
+        $order_item_order_id = mysqli_real_escape_string($mysqli, $_POST['order_item_order_id']);
+        $order_item_quantity_ordered = mysqli_real_escape_string($mysqli, $cart_products['quantity']);
+        $order_item_cost = mysqli_real_escape_string($mysqli, $cart_products['price']);
+        $order_item_farmer_product_id = mysqli_real_escape_string($mysqli, $cart_products['farmer_product_id']);
+
+        /* Persist */
+        $sql = "INSERT order_items (order_item_order_id, order_item_farmer_product_id, order_item_quantity_ordered, order_item_cost)
+        VALUES(
+            '{$order_item_order_id}',
+            '{$order_item_farmer_product_id}',
+            '{$order_item_quantity_ordered}',
+            '{$order_item_cost}'
+        )";
+        $prepare = $mysqli->prepare($sql);
+        $prepare->execute();
+    }
+    if ($prepare) {
+        unset($_SESSION['cart_item']);/* Clear Cart */
+        $_SESSION['success'] = 'Items Added To Order, Proceed To Pay Order';
+        header("Location: admin_orders");
+        exit;
+    } else {
+        $err = "Failed!, Please Try Again";
     }
 }
 require_once('../partials/head.php');
@@ -164,7 +201,7 @@ require_once('../partials/head.php');
                                                     <th style="text-align:right;" width="20%">Quantity</th>
                                                     <th style="text-align:right;" width="20%">Unit Price</th>
                                                     <th style="text-align:right;" width="20%">Price</th>
-                                                    <th style="text-align:right;" width="20%">Remove</th>
+                                                    <th style="text-align:right;" width="20%">Action</th>
                                                 </tr>
                                                 <?php
                                                 foreach ($_SESSION["cart_item"] as $item) {
@@ -182,15 +219,32 @@ require_once('../partials/head.php');
                                                     $total_price += ($item["price"] * $item["quantity"]);
                                                 }
                                                 ?>
-
                                                 <tr>
-                                                    <td colspan="2" align="right">Total:</td>
-                                                    <td align="right"><?php echo $total_quantity; ?></td>
-                                                    <td align="right" colspan="1"><strong><?php echo "Ksh " . number_format($total_price, 2); ?></strong></td>
+                                                    <td align="left"><b>Total: </b></td>
+                                                    <td colspan="1" align="right"><b><?php echo $total_quantity; ?></b></td>
+                                                    <td align="right" colspan="2"><strong><?php echo "Ksh " . number_format($total_price, 2); ?></strong></td>
                                                     <td></td>
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <hr>
+                                        <div class="text-right">
+                                            <form method="POST">
+                                                <?php
+                                                /* Get Order ID */
+                                                $ret = "SELECT * FROM `order` WHERE order_ref = '{$_GET['ref']}' ";
+                                                $stmt = $mysqli->prepare($ret);
+                                                $stmt->execute(); //ok
+                                                $res = $stmt->get_result();
+                                                while ($order = $res->fetch_object()) {
+                                                ?>
+                                                    <input type="hidden" name="order_item_order_id" value="<?php echo $order->order_id; ?>">
+                                                    <button name="add_customer_order" class="btn btn-primary" type="submit">
+                                                        Submit Order
+                                                    </button>
+                                                <?php } ?>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             <?php } else {
