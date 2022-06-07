@@ -72,14 +72,30 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="admin_orders" class="nav-link">
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-clipboard-list"></i>
                         <p>
                             Customer Orders
+                            <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="admin_orders" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Manage Orders</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="admin_products" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ordered Products</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
                 <li class="nav-item">
                     <a href="admin_payments" class="nav-link">
                         <i class="nav-icon fas fa-hand-holding-usd"></i>

@@ -17,7 +17,24 @@ require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 check_login();
 /* Add Order */
-/* Update Order */
+if (isset($_POST['add_order'])) {
+    $order_ref = mysqli_real_escape_string($mysqli, $a . $b);
+    $order_status = mysqli_real_escape_string($mysqli, 'Pending');
+    $order_customer_id = mysqli_real_escape_string($mysqli, $_POST['order_customer_id']);
+
+    /* Persist */
+    $sql = "INSERT INTO `order`(order_ref, order_status, order_customer_id)
+    VALUES('{$order_ref}', '{$order_status}', '{$order_customer_id}')";
+    $prepare = $mysqli->prepare($sql);
+    $prepare->execute();
+    if ($prepare) {
+        $_SESSION['success'] = 'Order Added, Proceed To Add Products Into Your Order';
+        header("Location: admin_add_order_products?ref=$order_ref");
+        exit;
+    } else {
+        $err = "Failed!, Please Try Again";
+    }
+}
 /* Delete Order */
 require_once('../partials/head.php');
 ?>
@@ -43,7 +60,8 @@ require_once('../partials/head.php');
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="admin_home">Home</a></li>
-                                <li class="breadcrumb-item active">Orders</li>
+                                <li class="breadcrumb-item"><a href="admin_home">Customer Orders</a></li>
+                                <li class="breadcrumb-item active">Manage Orders</li>
                             </ol>
                         </div>
                     </div>
@@ -58,9 +76,48 @@ require_once('../partials/head.php');
                             <div class="card card-primary card-outline">
                                 <div class="card-header p-2">
                                     <h3 class="text-right">
-                                        <a href="admin_add_order" class="btn btn-success"> Register New Order</a>
+                                        <button type="button" data-toggle="modal" data-target="#add_modal" class="btn btn-success"> Register New Customer Order</button>
                                     </h3>
                                 </div><!-- /.card-header -->
+                                <div class="modal fade" id="add_modal">
+                                    <div class="modal-dialog modal-dialog-centered  modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Fill All Required Fields </h4>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="post" enctype="multipart/form-data">
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-12">
+                                                            <label>Customer Name</label>
+                                                            <select type="text" name="order_customer_id" required class="form-control">
+                                                                <option>Select Customer Name</option>
+                                                                <?php
+                                                                $ret = "SELECT * FROM customer ";
+                                                                $stmt = $mysqli->prepare($ret);
+                                                                $stmt->execute(); //ok
+                                                                $res = $stmt->get_result();
+                                                                while ($customers = $res->fetch_object()) {
+                                                                ?>
+                                                                    <option value="<?php echo $customers->customer_id; ?>"><?php echo $customers->customer_name; ?></option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="text-right">
+                                                        <button name="add_order" class="btn btn-primary" type="submit">
+                                                            Register Customer Order
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="card-body">
                                     <table class="table table-bordered text-truncate" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
