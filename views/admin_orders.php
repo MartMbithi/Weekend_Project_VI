@@ -39,7 +39,7 @@ if (isset($_POST['add_order'])) {
 require_once('../partials/head.php');
 ?>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
         <!-- Navbar -->
         <?php require_once('../partials/navbar.php'); ?>

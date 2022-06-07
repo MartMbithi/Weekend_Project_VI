@@ -76,19 +76,33 @@ if (isset($_POST['add_customer_order'])) {
         $order_item_quantity_ordered = mysqli_real_escape_string($mysqli, $cart_products['quantity']);
         $order_item_cost = mysqli_real_escape_string($mysqli, $cart_products['price']);
         $order_item_farmer_product_id = mysqli_real_escape_string($mysqli, $cart_products['farmer_product_id']);
+        /* Check If Product Count Is Over Given One */
+        $sql = "SELECT * FROM  farmer_products  WHERE farmer_product_id = '{$order_item_farmer_product_id}'";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $products = mysqli_fetch_assoc($res);
+            /* Check If Current Product Quantity Has Reached Limit  $sale_quantity */
+            if ($products['farmer_product_quantity'] >= $order_item_quantity_ordered) {
+                /* Deduct Product Sale Quantity From Products Table */
+                $new_product_qty = $products['farmer_product_quantity'] - $order_item_quantity_ordered;
+                /* Persist */
+                $sql = "INSERT order_items (order_item_order_id, order_item_farmer_product_id, order_item_quantity_ordered, order_item_cost)
+                VALUES(
+                '{$order_item_order_id}',
+                '{$order_item_farmer_product_id}',
+                '{$order_item_quantity_ordered}',
+                '{$order_item_cost}'
+                )";
+                $product_sql = "UPDATE farmer_products SET farmer_product_quantity = '{$new_product_qty}' WHERE farmer_product_id = '{$order_item_farmer_product_id}'";
+                $prepare = $mysqli->prepare($sql);
+                $product_prepare = $mysqli->prepare($product_sql);
 
-        /* Persist */
-        $sql = "INSERT order_items (order_item_order_id, order_item_farmer_product_id, order_item_quantity_ordered, order_item_cost)
-        VALUES(
-            '{$order_item_order_id}',
-            '{$order_item_farmer_product_id}',
-            '{$order_item_quantity_ordered}',
-            '{$order_item_cost}'
-        )";
-        $prepare = $mysqli->prepare($sql);
-        $prepare->execute();
+                $prepare->execute();
+                $product_prepare->execute();
+            }
+        }
     }
-    if ($prepare) {
+    if ($prepare && $product_prepare) {
         unset($_SESSION['cart_item']);/* Clear Cart */
         $_SESSION['success'] = 'Items Added To Order, Proceed To Pay Order';
         header("Location: admin_orders");
@@ -102,7 +116,7 @@ require_once('../partials/head.php');
 ?>
 <link href="../public/css/cart.css" type="text/css" rel="stylesheet" />
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
         <!-- Navbar -->
         <?php require_once('../partials/navbar.php'); ?>
@@ -160,13 +174,19 @@ require_once('../partials/head.php');
                                                             <div class="card-body">
                                                                 <h6>
                                                                     <?php echo $product_array[$key]["product_name"]; ?> <br>
-                                                                    <?php echo "Ksh" . number_format($product_array[$key]["farmer_product_price"], 2); ?>
+                                                                    <?php echo "Ksh" . number_format($product_array[$key]["farmer_product_price"], 2); ?> <br>
+                                                                    <span class="text-success">Quantity In Stock: <?php echo $product_array[$key]['farmer_product_quantity']; ?></span>
                                                                 </h6>
                                                             </div>
-                                                            <div class="card-footer">
-                                                                <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
-                                                                <input type="submit" value="Add to Cart" class="btnAddAction" />
-                                                            </div>
+                                                            <?php
+                                                            if ($product_array[$key]['farmer_product_quantity'] <= 0) {
+                                                            } else {
+                                                            ?>
+                                                                <div class="card-footer">
+                                                                    <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
+                                                                    <input type="submit" value="Add to Cart" class="btnAddAction" />
+                                                                </div>
+                                                            <?php } ?>
                                                         </div>
                                                     </form>
                                                 </div>
