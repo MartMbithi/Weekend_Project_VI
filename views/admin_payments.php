@@ -87,7 +87,6 @@ require_once('../partials/head.php');
                                         <tbody>
                                             <?php
                                             $ret = "SELECT * FROM `order` o
-                                            INNER JOIN order_items oi ON oi.order_item_order_id = o.order_id
                                             INNER JOIN customer c ON c.customer_id = o.order_customer_id
                                             INNER JOIN payment p ON p.payment_order_id = o.order_id
                                             ";

@@ -218,7 +218,15 @@ require_once('../partials/head.php');
                                                     </td>
                                                     <td><?php echo $orders->order_item_quantity_ordered; ?></td>
                                                     <td>Ksh <?php echo number_format(($orders->order_item_quantity_ordered * $orders->farmer_product_price), 2); ?></td>
-                                                    <td><?php echo $orders->order_status; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        if ($orders->order_status == 'Paid') {
+                                                        ?>
+                                                            <span class="badge  badge-pill badge-success">Paid</span>
+                                                        <?php } else { ?>
+                                                            <span class="badge  badge-pill badge-danger">Pending</span>
+                                                        <?php } ?>
+                                                    </td>
                                                 </tr>
                                             <?php
                                             }
