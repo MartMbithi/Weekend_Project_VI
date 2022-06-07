@@ -84,11 +84,11 @@ if (isset($_POST['update_farmer_product'])) {
         }
     } else {
         /* Update Without Image Change */
-        $sql = "UPDATE  farmer_products SET
+        $sql = "UPDATE farmer_products SET
         farmer_product_product_id = '{$farmer_product_product_id}',
         farmer_product_date = '{$farmer_product_date}',
         farmer_product_quantity = '{$farmer_product_quantity}',
-        farmer_product_price = '{$farmer_product_price}',
+        farmer_product_price = '{$farmer_product_price}'
         WHERE farmer_product_id = '{$farmer_product_id}'";
         $prepare = $mysqli->prepare($sql);
         $prepare->execute();
