@@ -52,6 +52,53 @@ if (isset($_POST['add_farmer_product'])) {
     }
 }
 /* Update Farmers Products */
+if (isset($_POST['update_farmer_product'])) {
+    $farmer_product_id = mysqli_real_escape_string($mysqli, $_POST['farmer_product_id']);
+    $farmer_product_product_id = mysqli_real_escape_string($mysqli, $_POST['farmer_product_product_id']);
+    $farmer_product_date = mysqli_real_escape_string($mysqli, $_POST['farmer_product_date']);
+    $farmer_product_quantity = mysqli_real_escape_string($mysqli, $_POST['farmer_product_quantity']);
+    $farmer_product_price  = mysqli_real_escape_string($mysqli, $_POST['farmer_product_price']);
+    $farmer_product_image = mysqli_real_escape_string($mysqli, $_FILES['farmer_product_image']['name']);
+    if (!empty($farmer_product_image)) { /* Update With Image Change */
+
+        /* Process Posted Images */
+        $product_image = explode(".", $farmer_product_image);
+        /* Give New File Names */
+        $encoded_product_image = $a . $b . '.' . end($product_image);
+        /* Move Uploaded Images */
+        move_uploaded_file($_FILES["farmer_product_image"]["tmp_name"], "../public/images/products/" . $encoded_product_image);
+        /* Persist */
+        $sql = "UPDATE  farmer_products SET
+        farmer_product_product_id = '{$farmer_product_product_id}',
+        farmer_product_date = '{$farmer_product_date}',
+        farmer_product_quantity = '{$farmer_product_quantity}',
+        farmer_product_price = '{$farmer_product_price}',
+        farmer_product_image = '{$encoded_product_image}'
+        WHERE farmer_product_id = '{$farmer_product_id}'";
+        $prepare = $mysqli->prepare($sql);
+        $prepare->execute();
+        if ($prepare) {
+            $success = "Farmer Product Updated";
+        } else {
+            $err = "Failed!, Please Try Again";
+        }
+    } else {
+        /* Update Without Image Change */
+        $sql = "UPDATE  farmer_products SET
+        farmer_product_product_id = '{$farmer_product_product_id}',
+        farmer_product_date = '{$farmer_product_date}',
+        farmer_product_quantity = '{$farmer_product_quantity}',
+        farmer_product_price = '{$farmer_product_price}',
+        WHERE farmer_product_id = '{$farmer_product_id}'";
+        $prepare = $mysqli->prepare($sql);
+        $prepare->execute();
+        if ($prepare) {
+            $success = "Farmer Product Updated";
+        } else {
+            $err = "Failed!, Please Try Again";
+        }
+    }
+}
 /* Delete Farmers Products */
 require_once('../partials/head.php');
 ?>
@@ -154,7 +201,7 @@ require_once('../partials/head.php');
                                                             <label>Product Image</label>
                                                             <div class="input-group">
                                                                 <div class="custom-file">
-                                                                    <input type="file" name="farmer_product_image" accept=".png, .jpeg, .jpg" class="custom-file-input" id="exampleInputFile">
+                                                                    <input type="file" required name="farmer_product_image" accept=".png, .jpeg, .jpg" class="custom-file-input" id="exampleInputFile">
                                                                     <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                                                 </div>
                                                             </div>
@@ -206,13 +253,13 @@ require_once('../partials/head.php');
                                                         <b>Unit Price:</b> Ksh <?php echo number_format($product->farmer_product_price, 2); ?>
                                                     </td>
                                                     <td>
-                                                        <a data-toggle="modal" href="#update_<?php echo $product->product_id; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-edit"></em> Edit</a>
-                                                        <a data-toggle="modal" href="#delete_<?php echo $product->product_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete</a>
+                                                        <a data-toggle="modal" href="#update_<?php echo $product->farmer_product_id; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-edit"></em> Edit</a>
+                                                        <a data-toggle="modal" href="#delete_<?php echo $product->farmer_product_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete</a>
                                                     </td>
 
                                                 </tr>
                                                 <!-- Manage Category Modals -->
-                                                <div class="modal fade" id="update_<?php echo $product->product_id; ?>">
+                                                <div class="modal fade" id="update_<?php echo $product->farmer_product_id; ?>">
                                                     <div class="modal-dialog modal-dialog-centered  modal-lg">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -224,34 +271,47 @@ require_once('../partials/head.php');
                                                             <div class="modal-body">
                                                                 <form method="post" enctype="multipart/form-data">
                                                                     <div class="form-row">
-                                                                        <div class="form-group col-md-6">
+                                                                        <div class="form-group col-md-12">
                                                                             <label>Product Name</label>
-                                                                            <input type="hidden" name="product_id" value="<?php echo $product->product_id; ?>" required class="form-control">
-                                                                            <input type="text" name="product_name" value="<?php echo $product->product_name; ?>" required class="form-control">
-                                                                        </div>
-                                                                        <div class="form-group col-md-6">
-                                                                            <label>Category Name</label>
-                                                                            <select type="text" name="product_category_id" required class="form-control">
-                                                                                <option value="<?php echo $product->category_id; ?>"><?php echo $productg->category_name; ?></option>
+                                                                            <select type="text" name="farmer_product_product_id" required class="form-control">
+                                                                                <option value="<?php echo $product->farmer_product_product_id; ?>"><?php echo $product->product_name; ?></option>
                                                                                 <?php
-                                                                                $sql = "SELECT * FROM categories";
-                                                                                $stmt_1 = $mysqli->prepare($sql);
-                                                                                $stmt_1->execute(); //ok
-                                                                                $result = $stmt_1->get_result();
-                                                                                while ($category = $result->fetch_object()) {
+                                                                                $products_sql = "SELECT * FROM products";
+                                                                                $products_stmt = $mysqli->prepare($products_sql);
+                                                                                $products_stmt->execute(); //ok
+                                                                                $products_res = $products_stmt->get_result();
+                                                                                while ($products = $products_res->fetch_object()) {
                                                                                 ?>
-                                                                                    <option value="<?php echo $category->category_id; ?>"><?php echo $category->category_name; ?></option>
+                                                                                    <option value="<?php echo $products->product_id; ?>"><?php echo $products->product_name; ?></option>
                                                                                 <?php } ?>
                                                                             </select>
                                                                         </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label>Product Date</label>farmer_product_id
+                                                                            <input type="hidden" name="farmer_product_id" value="<?php echo $product->farmer_product_id; ?>" required class="form-control">
+                                                                            <input type="date" name="farmer_product_date" value="<?php echo $product->farmer_product_date; ?>" required class="form-control">
+                                                                        </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label>Product Quantity </label>
+                                                                            <input type="number" name="farmer_product_quantity" value="<?php echo $product->farmer_product_quantity; ?>" required class="form-control">
+                                                                        </div>
+                                                                        <div class="form-group col-md-4">
+                                                                            <label>Product Price (Ksh) </label>
+                                                                            <input type="number" name="farmer_product_price" value="<?php echo $product->farmer_product_price; ?>" required class="form-control">
+                                                                        </div>
                                                                         <div class="form-group col-md-12">
-                                                                            <label>Product Details</label>
-                                                                            <textarea type="text" name="product_desc" rows="2" class="form-control"><?php echo $product->product_desc; ?></textarea>
+                                                                            <label>Product Image</label>
+                                                                            <div class="input-group">
+                                                                                <div class="custom-file">
+                                                                                    <input type="file" name="farmer_product_image" accept=".png, .jpeg, .jpg" class="custom-file-input" id="exampleInputFile">
+                                                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <br>
                                                                     <div class="text-right">
-                                                                        <button name="update_product" class="btn btn-primary" type="submit">
+                                                                        <button name="update_farmer_product" class="btn btn-primary" type="submit">
                                                                             Update Product
                                                                         </button>
                                                                     </div>
@@ -261,7 +321,7 @@ require_once('../partials/head.php');
                                                     </div>
                                                 </div>
                                                 <!-- Delete Modal -->
-                                                <div class="modal fade" id="delete_<?php echo $product->product_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="delete_<?php echo $product->farmer_product_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -273,11 +333,10 @@ require_once('../partials/head.php');
                                                             <form method="POST">
                                                                 <div class="modal-body text-center ">
                                                                     <h4 class="text-danger">
-                                                                        Delete <?php echo  $product->product_name; ?> Account?
-                                                                    </h4>
+                                                                        Delete <?php echo  $product->product_name; ?>? </h4>
                                                                     <br>
                                                                     <!-- Hide This -->
-                                                                    <input type="hidden" name="product_id" value="<?php echo $product->product_id; ?>">
+                                                                    <input type="hidden" name="farmer_product_id" value="<?php echo $product->farmer_product_id; ?>">
                                                                     <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
                                                                     <button type="submit" class="text-center btn btn-danger" name="delete_product">Delete</button>
                                                                 </div>

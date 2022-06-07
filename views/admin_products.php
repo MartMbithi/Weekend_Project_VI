@@ -248,8 +248,7 @@ require_once('../partials/head.php');
                                                             <form method="POST">
                                                                 <div class="modal-body text-center ">
                                                                     <h4 class="text-danger">
-                                                                        Delete <?php echo  $product->product_name; ?> Account?
-                                                                    </h4>
+                                                                        Delete <?php echo  $product->product_name; ?>? </h4>
                                                                     <br>
                                                                     <!-- Hide This -->
                                                                     <input type="hidden" name="product_id" value="<?php echo $product->product_id; ?>">
