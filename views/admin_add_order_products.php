@@ -23,8 +23,9 @@ if (!empty($_GET["action"])) {
     switch ($_GET["action"]) {
         case "add":
             if (!empty($_POST["quantity"])) {
-                $productByCode = $db_handle->runQuery("SELECT * FROM products WHERE product_name ='" . $_GET["product_name"] . "'");
-                $itemArray = array($productByCode[0]["product_name"] => array('product_name' => $productByCode[0]["product_name"],  'quantity' => $_POST["quantity"], 'price' => $productByCode[0]["price"], 'image' => $productByCode[0]["image"]));
+                $productByCode = $db_handle->runQuery("SELECT * FROM products p INNER JOIN farmer_products fp 
+                ON fp.farmer_product_product_id = p.product_id WHERE p.product_name ='" . $_GET["product_name"] . "'");
+                $itemArray = array($productByCode[0]["product_name"] => array('product_name' => $productByCode[0]["product_name"],  'quantity' => $_POST["quantity"], 'price' => $productByCode[0]["farmer_product_price"], 'image' => $productByCode[0]["farmer_product_image"]));
 
                 if (!empty($_SESSION["cart_item"])) {
                     if (in_array($productByCode[0]["product_name"], array_keys($_SESSION["cart_item"]))) {
@@ -155,46 +156,47 @@ require_once('../partials/head.php');
                                             <a href="admin_add_order_products?ref=<?php echo $_GET['ref']; ?>&action=empty" class="btn btn-danger"> Clear Cart</a>
                                         </h3>
                                     </div><!-- /.card-header -->
-                                </div>
-                                <!-- /.nav-tabs-custom -->
-                                <div class="card-body">
 
-                                    <table class="tbl-cart" cellpadding="10" cellspacing="1">
-                                        <tbody>
-                                            <tr>
-                                                <th style="text-align:left;">Name</th>
-                                                <th style="text-align:left;">Code</th>
-                                                <th style="text-align:right;" width="5%">Quantity</th>
-                                                <th style="text-align:right;" width="10%">Unit Price</th>
-                                                <th style="text-align:right;" width="10%">Price</th>
-                                                <th style="text-align:center;" width="5%">Remove</th>
-                                            </tr>
-                                            <?php
-                                            foreach ($_SESSION["cart_item"] as $item) {
-                                                $item_price = $item["quantity"] * $item["price"];
-                                            ?>
+                                    <!-- /.nav-tabs-custom -->
+                                    <div class="card-body">
+
+                                        <table class="tbl-cart" cellpadding="10" cellspacing="1">
+                                            <tbody>
                                                 <tr>
-                                                    <td><img src="<?php echo $item["image"]; ?>" class="cart-item-image" /><?php echo $item["name"]; ?></td>
-                                                    <td><?php echo $item["code"]; ?></td>
-                                                    <td style="text-align:right;"><?php echo $item["quantity"]; ?></td>
-                                                    <td style="text-align:right;"><?php echo "Ksh " . $item["price"]; ?></td>
-                                                    <td style="text-align:right;"><?php echo "Ksh " . number_format($item_price, 2); ?></td>
-                                                    <td style="text-align:center;"><a href="index.php?action=remove&code=<?php echo $item["code"]; ?>" class="btnRemoveAction"><img src="icon-delete.png" alt="Remove Item" /></a></td>
+                                                    <th style="text-align:left;">Name</th>
+                                                    <th style="text-align:left;">Code</th>
+                                                    <th style="text-align:right;" width="5%">Quantity</th>
+                                                    <th style="text-align:right;" width="10%">Unit Price</th>
+                                                    <th style="text-align:right;" width="10%">Price</th>
+                                                    <th style="text-align:center;" width="5%">Remove</th>
                                                 </tr>
-                                            <?php
-                                                $total_quantity += $item["quantity"];
-                                                $total_price += ($item["price"] * $item["quantity"]);
-                                            }
-                                            ?>
+                                                <?php
+                                                foreach ($_SESSION["cart_item"] as $item) {
+                                                    $item_price = $item["quantity"] * $item["price"];
+                                                ?>
+                                                    <tr>
+                                                        <td><img src="<?php echo $item["image"]; ?>" class="cart-item-image" /><?php echo $item["name"]; ?></td>
+                                                        <td><?php echo $item["code"]; ?></td>
+                                                        <td style="text-align:right;"><?php echo $item["quantity"]; ?></td>
+                                                        <td style="text-align:right;"><?php echo "Ksh " . $item["price"]; ?></td>
+                                                        <td style="text-align:right;"><?php echo "Ksh " . number_format($item_price, 2); ?></td>
+                                                        <td style="text-align:center;"><a href="index.php?action=remove&code=<?php echo $item["code"]; ?>" class="btnRemoveAction"><img src="icon-delete.png" alt="Remove Item" /></a></td>
+                                                    </tr>
+                                                <?php
+                                                    $total_quantity += $item["quantity"];
+                                                    $total_price += ($item["price"] * $item["quantity"]);
+                                                }
+                                                ?>
 
-                                            <tr>
-                                                <td colspan="2" align="right">Total:</td>
-                                                <td align="right"><?php echo $total_quantity; ?></td>
-                                                <td align="right" colspan="2"><strong><?php echo "$ " . number_format($total_price, 2); ?></strong></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                <tr>
+                                                    <td colspan="2" align="right">Total:</td>
+                                                    <td align="right"><?php echo $total_quantity; ?></td>
+                                                    <td align="right" colspan="2"><strong><?php echo "$ " . number_format($total_price, 2); ?></strong></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             <?php } else {
                             ?>
