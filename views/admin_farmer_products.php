@@ -193,9 +193,7 @@ require_once('../partials/head.php');
                                             ?>
                                                 <tr>
                                                     <td>
-                                                        <div class="img-fluid">
-                                                            <img style="max-width: 100%; height: auto;" src="../public/images/products/<?php echo $product->farmer_product_image; ?>">
-                                                        </div>
+                                                        <img width="200" class="img-thumbnail" src="../public/images/products/<?php echo $product->farmer_product_image; ?>">
                                                     </td>
                                                     <td>
                                                         <b>Name: </b> <?php echo $product->farmer_name; ?> <br>
