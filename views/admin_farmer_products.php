@@ -28,9 +28,9 @@ if (isset($_POST['add_farmer_product'])) {
     /* Process Posted Images */
     $product_image = explode(".", $farmer_product_image);
     /* Give New File Names */
-    $encoded_product_image = $a . '.' . end($product_image);
+    $encoded_product_image = $a . $b . '.' . end($product_image);
     /* Move Uploaded Images */
-    move_uploaded_file($_FILES["farmer_product_image"]["tmp_name"], "../public/products/" . $encoded_product_image);
+    move_uploaded_file($_FILES["farmer_product_image"]["tmp_name"], "../public/images/products/" . $encoded_product_image);
 
     /* Persist */
     $sql = "INSERT INTO farmer_products (farmer_product_farmer_id, farmer_product_product_id, farmer_product_date, farmer_product_quantity,
