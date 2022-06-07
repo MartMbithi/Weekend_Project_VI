@@ -185,7 +185,7 @@ require_once('../partials/head.php');
 
                                                         <?php }
                                                         ?>
-                                                        <a data-toggle="modal" href="#view_g<?php echo $orders->order_id; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-eye"></em> View Order</a>
+                                                        <a href="admin_view_order?order=<?php echo $orders->order_id; ?>&ref=<?php echo $orders->order_ref; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-eye"></em> View Order</a>
                                                         <a data-toggle="modal" href="#delete_<?php echo $orders->order_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete Order</a>
                                                     </td>
                                                 </tr>
@@ -219,7 +219,6 @@ require_once('../partials/head.php');
                                             ?>
                                         </tbody>
                                     </table>
-
                                 </div><!-- /.card-body -->
                             </div>
                             <!-- /.nav-tabs-custom -->
