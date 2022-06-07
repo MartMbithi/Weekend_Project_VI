@@ -49,6 +49,35 @@ if (isset($_POST['delete_order'])) {
         $err = "Failed!, Please Try Again";
     }
 }
+
+/* Pay Order */
+if (isset($_POST['pay_order'])) {
+    $payment_type = mysqli_real_escape_string($mysqli, $_POST['payment_type']);
+    $payment_ref = mysqli_real_escape_string($mysqli, $_POST['payment_ref']);
+    $payment_order_id = mysqli_real_escape_string($mysqli, $_POST['payment_order_id']);
+    $order_status = mysqli_real_escape_string($mysqli, 'Paid');
+
+    /* Persist */
+    $sql = "INSERT INTO payment(payment_type, payment_ref, payment_order_id)
+    VALUES(
+        '{$payment_type}',
+        '{$payment_ref}',
+        '{$payment_order_id}'
+    )";
+    $status = "UPDATE `order` SET order_status = '{$order_status}' WHERE order_id = '{$payment_order_id}'";
+
+    $prepare = $mysqli->prepare($sql);
+    $order_prepare = $mysqli->prepare($status);
+
+    $prepare->execute();
+    $order_prepare->execute();
+
+    if ($prepare && $order_prepare) {
+        $success = "Order Payment Posted";
+    } else {
+        $err = "Failed!, Please Try Again";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
@@ -184,7 +213,10 @@ require_once('../partials/head.php');
                                                             <a href="admin_add_order_products?ref=<?php echo $orders->order_ref; ?>" class="badge  badge-pill badge-success"><em class="fas fa-shopping-cart"></em> Add Products</a>
 
                                                         <?php }
+                                                        if ($orders->order_status == 'Pending') {
                                                         ?>
+                                                            <a data-toggle="modal" href="#pay_<?php echo $orders->order_id; ?>" class="badge  badge-pill badge-primary"><em class="fas fa-check"></em> Pay Order</a>
+                                                        <?php } ?>
                                                         <a href="admin_view_order?order=<?php echo $orders->order_id; ?>&ref=<?php echo $orders->order_ref; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-eye"></em> View Order</a>
                                                         <a data-toggle="modal" href="#delete_<?php echo $orders->order_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete Order</a>
                                                     </td>
@@ -210,6 +242,44 @@ require_once('../partials/head.php');
                                                                     <button type="submit" class="text-center btn btn-danger" name="delete_order">Delete</button>
                                                                 </div>
                                                             </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Pay Order -->
+                                                <div class="modal fade" id="pay_<?php echo $orders->order_id; ?>">
+                                                    <div class="modal-dialog modal-dialog-centered  modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Fill All Required Fields </h4>
+                                                                <button type="button" class="close" data-dismiss="modal">
+                                                                    <span>&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form method="post" enctype="multipart/form-data">
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-md-6">
+                                                                            <label>Payment Ref</label>
+                                                                            <input type="text" readonly name="payment_ref" value="<?php echo $paycode; ?>" required class="form-control">
+                                                                            <input type="hidden" name="payment_order_id" value="<?php echo $orders->order_id; ?>" required class="form-control">
+                                                                        </div>
+                                                                        <div class="form-group col-md-6">
+                                                                            <label>Payment Means</label>
+                                                                            <select type="text" name="payment_type" required class="form-control">
+                                                                                <option>Cash On Delivery</option>
+                                                                                <option>Credit / Debit Card</option>
+                                                                                <option>Mpesa</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="text-right">
+                                                                        <button name="pay_order" class="btn btn-primary" type="submit">
+                                                                            Pay Order
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

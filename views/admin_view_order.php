@@ -17,8 +17,6 @@ require_once('../config/dbcontroller.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 check_login();
-/* Pay Order */
-/* Update Order */
 require_once('../partials/head.php');
 
 ?>
@@ -109,9 +107,29 @@ require_once('../partials/head.php');
                                 </div><!-- /.card-header -->
 
                                 <!-- /.nav-tabs-custom -->
-                                <div class="card-body">
-
-                                </div>
+                                <?php
+                                $ret = "SELECT * FROM payment p WHERE p.payment_order_id = '{$_GET['order']}'";
+                                $stmt = $mysqli->prepare($ret);
+                                $stmt->execute(); //ok
+                                $res = $stmt->get_result();
+                                while ($payment = $res->fetch_object()) {
+                                ?>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="card-body box-profile">
+                                                <h3 class="profile-username text-center text-success"><?php echo $payment->payment_ref; ?></h3>
+                                                <ul class="list-group list-group-unbordered mb-3">
+                                                    <li class="list-group-item">
+                                                        <b>Mode Of Payment: </b> <a class="float-right"><?php echo $payment->payment_type; ?></a>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <b>Date: </b> <a class="float-right"><?php echo date('d M Y g:ia', strtotime($payment->payment_date)); ?></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -130,7 +148,6 @@ require_once('../partials/head.php');
                                                 <th>Product Details</th>
                                                 <th>Farmer Details</th>
                                                 <th>Order Details</th>
-                                                <th>Manage</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -158,35 +175,7 @@ require_once('../partials/head.php');
                                                         <b>Qty Ordered: </b><?php echo $product->order_item_quantity_ordered; ?><br>
                                                         <b>Item Cost: </b>Ksh <?php echo number_format($product->order_item_cost, 2); ?>
                                                     </td>
-                                                    <td>
-                                                        <a data-toggle="modal" href="#delete_<?php echo $product->farmer_product_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete</a>
-                                                    </td>
                                                 </tr>
-                                                <!-- Delete Modal -->
-                                                <div class="modal fade" id="delete_<?php echo $product->farmer_product_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">CONFIRM DELETE</h5>
-                                                                <button type="button" class="close" data-dismiss="modal">
-                                                                    <span>&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <form method="POST">
-                                                                <div class="modal-body text-center ">
-                                                                    <h4 class="text-danger">
-                                                                        Delete <?php echo  $product->product_name; ?>? </h4>
-                                                                    <br>
-                                                                    <!-- Hide This -->
-                                                                    <input type="hidden" name="farmer_product_id" value="<?php echo $product->farmer_product_id; ?>">
-                                                                    <input type="hidden" name="farmer_product_image" value="<?php echo $product->farmer_product_image; ?>">
-                                                                    <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                    <button type="submit" class="text-center btn btn-danger" name="delete_product">Delete</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             <?php
                                             }
                                             ?>
