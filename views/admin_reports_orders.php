@@ -11,6 +11,7 @@
  * can only be MART DEVELOPERS INC.
  *
  */
+
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
@@ -35,13 +36,13 @@ require_once('../partials/head.php');
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Farmers Products Reports</h1>
+                            <h1>Orders Reports</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="admin_home">Home</a></li>
                                 <li class="breadcrumb-item"><a href="admin_home">Reports</a></li>
-                                <li class="breadcrumb-item active">Farmers Products</li>
+                                <li class="breadcrumb-item active">Orders</li>
                             </ol>
                         </div>
                     </div>
@@ -58,30 +59,43 @@ require_once('../partials/head.php');
                                     <table class="report_table table-bordered text-truncate" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th>Farmer Details</th>
+                                                <th>Order REF</th>
                                                 <th>Product Details</th>
+                                                <th>Customer Details</th>
+                                                <th>QTY Ordered</th>
+                                                <th>Order Price</th>
+                                                <th>Order Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $ret = "SELECT * FROM farmer_products fp 
-                                            INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
-                                            INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id";
+                                            $ret = "SELECT * FROM `order` o 
+                                            INNER JOIN order_items oi ON oi.order_item_order_id = o.order_id 
+                                            INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
+                                            INNER JOIN products p ON p.product_id = fp.farmer_product_product_id
+                                            INNER JOIN customer c ON c.customer_id = o.order_customer_id";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
-                                            while ($product = $res->fetch_object()) {
+                                            while ($orders = $res->fetch_object()) {
                                             ?>
                                                 <tr>
+                                                    <td><?php echo $orders->order_ref; ?></td>
+                                                    <td><?php echo $orders->product_name; ?></td>
                                                     <td>
-                                                        <b>Name: </b> <?php echo $product->farmer_name; ?> <br>
-                                                        <b>Contacts: </b> <?php echo $product->farmer_phone; ?>
+                                                        Name: <?php echo $orders->customer_name; ?> <br>
+                                                        Email: <?php echo $orders->customer_email; ?>
                                                     </td>
+                                                    <td><?php echo $orders->order_item_quantity_ordered; ?></td>
+                                                    <td>Ksh <?php echo number_format(($orders->order_item_quantity_ordered * $orders->farmer_product_price), 2); ?></td>
                                                     <td>
-                                                        <b>Name: </b> <?php echo $product->product_name; ?> <br>
-                                                        <b>Date: </b> <?php echo date('d M Y', strtotime($product->farmer_product_date)); ?> <br>
-                                                        <b>Qty Available: </b> <?php echo $product->farmer_product_quantity; ?><br>
-                                                        <b>Unit Price:</b> Ksh <?php echo number_format($product->farmer_product_price, 2); ?>
+                                                        <?php
+                                                        if ($orders->order_status == 'Paid') {
+                                                        ?>
+                                                            <span class="badge  badge-pill badge-success">Paid</span>
+                                                        <?php } else { ?>
+                                                            <span class="badge  badge-pill badge-danger">Pending</span>
+                                                        <?php } ?>
                                                     </td>
                                                 </tr>
                                             <?php
@@ -89,7 +103,6 @@ require_once('../partials/head.php');
                                             ?>
                                         </tbody>
                                     </table>
-
                                 </div><!-- /.card-body -->
                             </div>
                             <!-- /.nav-tabs-custom -->
