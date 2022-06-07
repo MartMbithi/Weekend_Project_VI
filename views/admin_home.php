@@ -54,110 +54,125 @@ require_once('../partials/head.php');
                     <!-- Info boxes -->
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users"></i></span>
-
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Customers</span>
-                                    <span class="info-box-number">
-                                        <?php echo $customers; ?>
-                                    </span>
+                            <a href="admin_customers" class="text-dark">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Customers</span>
+                                        <span class="info-box-number">
+                                            <?php echo $customers; ?>
+                                        </span>
+                                    </div>
+                                    <!-- /.info-box-content -->
                                 </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
+                                <!-- /.info-box -->
+                            </a>
                         </div>
                         <!-- /.col -->
                         <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user-tag"></i></span>
+                            <a href="admin_farmers" class="text-dark">
+                                <div class="info-box mb-3">
+                                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user-tag"></i></span>
 
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Farmers</span>
-                                    <span class="info-box-number"><?php echo $farmers; ?></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Farmers</span>
+                                        <span class="info-box-number"><?php echo $farmers; ?></span>
+                                    </div>
+                                    <!-- /.info-box-content -->
                                 </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
+                                <!-- /.info-box -->
+                            </a>
                         </div>
                         <!-- /.col -->
 
                         <!-- fix for small devices only -->
                         <div class="clearfix hidden-md-up"></div>
                         <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-list"></i></span>
+                            <a href="admin_farm_categories" class="text-dark">
+                                <div class="info-box mb-3">
+                                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-list"></i></span>
 
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Farm Product Categories</span>
-                                    <span class="info-box-number"><?php echo $categories; ?></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Farm Product Categories</span>
+                                        <span class="info-box-number"><?php echo $categories; ?></span>
+                                    </div>
+                                    <!-- /.info-box-content -->
                                 </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
+                                <!-- /.info-box -->
+                            </a>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-carrot"></i></span>
+                            <a href="admin_products" class="text-dark">
+                                <div class="info-box mb-3">
+                                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-carrot"></i></span>
 
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Farm Products</span>
-                                    <span class="info-box-number"><?php echo $farmer_products; ?></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Farm Products</span>
+                                        <span class="info-box-number"><?php echo $farmer_products; ?></span>
+                                    </div>
+                                    <!-- /.info-box-content -->
                                 </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
+                                <!-- /.info-box -->
+                            </a>
                         </div>
                         <!-- /.col -->
 
 
                         <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
+                            <a href="admin_orders" class="text-dark">
+                                <div class="info-box mb-3">
+                                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
 
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Unpaid Orders</span>
-                                    <span class="info-box-number"><?php echo $pending; ?></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Unpaid Orders</span>
+                                        <span class="info-box-number"><?php echo $pending; ?></span>
+                                    </div>
+                                    <!-- /.info-box-content -->
                                 </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
+                                <!-- /.info-box -->
+                            </a>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
+                            <a href="admin_orders" class="text-dark">
+                                <div class="info-box mb-3">
+                                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
 
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Paid Orders</span>
-                                    <span class="info-box-number"><?php echo $paid; ?></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Paid Orders</span>
+                                        <span class="info-box-number"><?php echo $paid; ?></span>
+                                    </div>
+                                    <!-- /.info-box-content -->
                                 </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
+                                <!-- /.info-box -->
+                            </a>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clipboard-list"></i></span>
+                            <a href="admin_orders" class="text-dark">
+                                <div class="info-box mb-3">
+                                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clipboard-list"></i></span>
 
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Total Orders</span>
-                                    <span class="info-box-number"><?php echo $orders; ?></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Total Orders</span>
+                                        <span class="info-box-number"><?php echo $orders; ?></span>
+                                    </div>
+                                    <!-- /.info-box-content -->
                                 </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
+                                <!-- /.info-box -->
+                            </a>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill-alt"></i></span>
+                            <a href="admin_payments" class="text-dark">
+                                <div class="info-box mb-3">
+                                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill-alt"></i></span>
 
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Overall Income</span>
-                                    <span class="info-box-number">Ksh <?php echo number_format($payments, 2); ?></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Overall Income</span>
+                                        <span class="info-box-number">Ksh <?php echo number_format($payments, 2); ?></span>
+                                    </div>
+                                    <!-- /.info-box-content -->
                                 </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
+                                <!-- /.info-box -->
+                            </a>
                         </div>
                         <!-- /.col -->
                     </div>

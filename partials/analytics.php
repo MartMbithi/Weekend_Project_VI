@@ -41,7 +41,7 @@ $stmt->fetch();
 $stmt->close();
 
 /* Farm Products */
-$query = "SELECT COUNT(*)  FROM `farmer_products`";
+$query = "SELECT COUNT(*)  FROM `products`";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($farmer_products);
