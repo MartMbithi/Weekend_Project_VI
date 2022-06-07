@@ -65,10 +65,9 @@ require_once('../partials/head.php');
 
                                 <!-- /.nav-tabs-custom -->
                                 <?php
-                                $ret = "SELECT * FROM order_items ot
-                                INNER JOIN `order` o ON o.order_id = ot.order_item_order_id
+                                $ret = "SELECT * FROM  `order` o 
                                 INNER JOIN customer c ON c.customer_id = o.order_customer_id
-                                WHERE  o.order_ref = '{$_GET['ref']}'";
+                                WHERE  o.order_id = '{$_GET['order']}'";
                                 $stmt = $mysqli->prepare($ret);
                                 $stmt->execute(); //ok
                                 $res = $stmt->get_result();
@@ -113,17 +112,38 @@ require_once('../partials/head.php');
                                 $stmt->execute(); //ok
                                 $res = $stmt->get_result();
                                 while ($payment = $res->fetch_object()) {
+                                    $ret = "SELECT * FROM order_items oi 
+                                    INNER JOIN `order` o ON o.order_id = oi.order_item_order_id
+                                    INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
+                                    INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
+                                    INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id
+                                    WHERE o.order_id = '{$_GET['order']}'";
+                                    $stmt = $mysqli->prepare($ret);
+                                    $stmt->execute(); //ok
+                                    $res = $stmt->get_result();
+                                    $total_paid = 0;
+                                    while ($product = $res->fetch_object()) {
+                                        /* Compute Total Payable Amout */
+                                        $unit_paid = ($product->order_item_cost) * ($product->order_item_quantity_ordered);
+                                        $total_paid += $unit_paid;
+                                    }
                                 ?>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="card-body box-profile">
-                                                <h3 class="profile-username text-center text-success"><?php echo $payment->payment_ref; ?></h3>
+                                                <h3 class="profile-username text-center text-success"><?php echo $payment->payment_ref; ?> CONFIRMED</h3>
                                                 <ul class="list-group list-group-unbordered mb-3">
                                                     <li class="list-group-item">
                                                         <b>Mode Of Payment: </b> <a class="float-right"><?php echo $payment->payment_type; ?></a>
                                                     </li>
                                                     <li class="list-group-item">
                                                         <b>Date: </b> <a class="float-right"><?php echo date('d M Y g:ia', strtotime($payment->payment_date)); ?></a>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <b>Amount Paid: </b> <a class="float-right">Ksh <?php echo number_format($total_paid, 2); ?></a>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <b>Payment Ref: </b> <a class="float-right"> <?php echo $payment->payment_ref; ?></a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -154,14 +174,16 @@ require_once('../partials/head.php');
                                             <?php
                                             $ret = "SELECT * FROM order_items oi 
                                             INNER JOIN `order` o ON o.order_id = oi.order_item_order_id
-                                            INNER JOIN farmer_products fp ON oi.order_item_farmer_product_id
+                                            INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
                                             INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
                                             INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id
-                                            WHERE o.order_ref = '{$_GET['ref']}'";
+                                            WHERE o.order_id = '{$_GET['order']}'";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
                                             while ($product = $res->fetch_object()) {
+                                                /* Compute Total Payable Amout */
+                                                $unit_paid = ($product->order_item_cost) * ($product->order_item_quantity_ordered);
                                             ?>
                                                 <tr>
                                                     <td>
