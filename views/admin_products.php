@@ -183,7 +183,6 @@ require_once('../partials/head.php');
                                                     <td>
                                                         <a data-toggle="modal" href="#update_<?php echo $product->product_id; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-edit"></em> Edit</a>
                                                         <a data-toggle="modal" href="#delete_<?php echo $product->product_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete</a>
-
                                                     </td>
 
                                                 </tr>
@@ -208,7 +207,7 @@ require_once('../partials/head.php');
                                                                         <div class="form-group col-md-6">
                                                                             <label>Category Name</label>
                                                                             <select type="text" name="product_category_id" required class="form-control">
-                                                                                <option value="<?php echo $product->category_id; ?>"><?php echo $category->category_name; ?></option>
+                                                                                <option value="<?php echo $product->category_id; ?>"><?php echo $productg->category_name; ?></option>
                                                                                 <?php
                                                                                 $sql = "SELECT * FROM categories";
                                                                                 $stmt_1 = $mysqli->prepare($sql);
