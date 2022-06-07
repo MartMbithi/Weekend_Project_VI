@@ -175,25 +175,38 @@ require_once('../partials/head.php');
                                     <table class="table table-bordered text-truncate" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th>Product Name</th>
-                                                <th>Category Name</th>
+                                                <th>Product Image</th>
+                                                <th>Farmer Details</th>
                                                 <th>Product Details</th>
                                                 <th>Manage</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $ret = "SELECT * FROM products p 
-                                            INNER JOIN categories c ON c.category_id  = p.product_category_id";
+                                            $ret = "SELECT * FROM farmer_products fp 
+                                            INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
+                                            INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
                                             while ($product = $res->fetch_object()) {
                                             ?>
                                                 <tr>
-                                                    <td><?php echo $product->product_name; ?></td>
-                                                    <td><?php echo $product->category_name; ?></td>
-                                                    <td><?php echo $product->product_desc; ?></td>
+                                                    <td>
+                                                        <div class="img-fluid">
+                                                            <img style="max-width: 100%; height: auto;" src="../public/images/products/<?php echo $product->farmer_product_image; ?>">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <b>Name: </b> <?php echo $product->farmer_name; ?> <br>
+                                                        <b>Contacts: </b> <?php echo $product->farmer_phone; ?>
+                                                    </td>
+                                                    <td>
+                                                        <b>Name: </b> <?php echo $product->product_name; ?> <br>
+                                                        <b>Date: </b> <?php echo date('d M Y', strtotime($product->farmer_product_date)); ?> <br>
+                                                        <b>Qty Available: </b> <?php echo $product->farmer_product_quantity; ?><br>
+                                                        <b>Unit Price:</b> Ksh <?php echo number_format($product->farmer_product_price, 2); ?>
+                                                    </td>
                                                     <td>
                                                         <a data-toggle="modal" href="#update_<?php echo $product->product_id; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-edit"></em> Edit</a>
                                                         <a data-toggle="modal" href="#delete_<?php echo $product->product_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete</a>
