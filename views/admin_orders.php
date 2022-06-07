@@ -123,35 +123,50 @@ require_once('../partials/head.php');
                                         <thead>
                                             <tr>
                                                 <th>Order REF</th>
-                                                <th>Product Details</th>
-                                                <th>Customer Details</th>
-                                                <th>QTY Ordered</th>
-                                                <th>Order Price</th>
+                                                <th>Customer</th>
+                                                <th>Products Qty</th>
                                                 <th>Order Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             $ret = "SELECT * FROM `order` o 
-                                            INNER JOIN order_items oi ON oi.order_item_order_id = o.order_id 
-                                            INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
-                                            INNER JOIN products p ON p.product_id = fp.farmer_product_product_id
                                             INNER JOIN customer c ON c.customer_id = o.order_customer_id";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
                                             while ($orders = $res->fetch_object()) {
+                                                /* Count Number Of Products Ordered */
+                                                $query = "SELECT SUM(order_item_quantity_ordered)  FROM order_items
+                                                WHERE order_item_order_id = '{$orders->order_id}'";
+                                                $stmt = $mysqli->prepare($query);
+                                                $stmt->execute();
+                                                $stmt->bind_result($order_items);
+                                                $stmt->fetch();
+                                                $stmt->close();
+                                                if ($order_items <= 0) {
+                                                    $order_items = '0';
+                                                } else {
+                                                    $order_items = $order_items;
+                                                }
                                             ?>
                                                 <tr>
                                                     <td><?php echo $orders->order_ref; ?></td>
-                                                    <td><?php echo $orders->product_name; ?></td>
                                                     <td>
-                                                        Name: <?php echo $orders->customer_name; ?> <br>
-                                                        Email: <?php echo $orders->customer_email; ?>
+                                                        <b>Name: </b> <?php echo $orders->customer_name; ?> <br>
+                                                        <b>Email: </b> <?php echo $orders->customer_email; ?>
                                                     </td>
-                                                    <td><?php echo $orders->order_item_quantity_ordered; ?></td>
-                                                    <td>Ksh <?php echo number_format(($orders->order_item_quantity_ordered * $orders->farmer_product_price), 2); ?></td>
-                                                    <td><?php echo $orders->order_status; ?></td>
+                                                    <td><?php echo $order_items; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        if ($order_items <= 0) { ?>
+                                                            <a href="admin_add_order_products?ref=<?php echo $orders->order_ref; ?>" class="badge  badge-pill badge-success"><em class="fas fa-shopping-cart"></em> Add Products</a>
+
+                                                        <?php }
+                                                        ?>
+                                                        <a data-toggle="modal" href="#view_g<?php echo $orders->order_id; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-eye"></em> View Order</a>
+                                                        <a data-toggle="modal" href="#delete_<?php echo $orders->order_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete Order</a>
+                                                    </td>
                                                 </tr>
                                             <?php
                                             }

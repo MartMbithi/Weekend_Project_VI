@@ -141,7 +141,7 @@ require_once('../partials/head.php');
                                 </div>
                             </div>
                         </div>
-                   
+
                         <div class="col-md-6">
                             <?php
                             if (isset($_SESSION["cart_item"])) {
