@@ -12,6 +12,8 @@
  <script src="dist/js/adminlte.js"></script>
  <!-- Select2 -->
  <script src="../public/plugins/select2/js/select2.full.min.js"></script>
+ <!-- bs-custom-file-input -->
+ <script src="../public/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
  <!-- Data Tables CDN -->
  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
@@ -22,6 +24,11 @@
  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
  <!-- Toastr -->
  <script src="../public/plugins/toastr/toastr.min.js"></script>
+ <script type="text/javascript">
+     $(document).ready(function() {
+         bsCustomFileInput.init();
+     });
+ </script>
  <script>
      /* Stop Double Resubmission */
      if (window.history.replaceState) {
