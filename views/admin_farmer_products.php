@@ -99,7 +99,24 @@ if (isset($_POST['update_farmer_product'])) {
         }
     }
 }
+
 /* Delete Farmers Products */
+if (isset($_POST['delete_product'])) {
+    $farmer_product_id = mysqli_real_escape_string($mysqli, $_POST['farmer_product_id']);
+    $farmer_product_image  = mysqli_real_escape_string($mysqli, $_POST['farmer_product_image']);
+
+    /* Persist */
+    $sql = "DELETE FROM farmer_products WHERE farmer_product_id = '{$farmer_product_id}'";
+    $prepare = $mysqli->prepare($sql);
+    $prepare->execute();
+    /* Delete Product Image From Storage */
+    unlink('../public/images/product/' . $farmer_product_image);
+    if ($prepare) {
+        $success = "Farmer Product Deleted";
+    } else {
+        $err = "Failed!, Please Try Again Later";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
