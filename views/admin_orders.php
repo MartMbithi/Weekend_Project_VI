@@ -126,6 +126,7 @@ require_once('../partials/head.php');
                                                 <th>Customer</th>
                                                 <th>Products Qty</th>
                                                 <th>Order Status</th>
+                                                <th>Manage</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -157,6 +158,13 @@ require_once('../partials/head.php');
                                                         <b>Email: </b> <?php echo $orders->customer_email; ?>
                                                     </td>
                                                     <td><?php echo $order_items; ?></td>
+                                                    <td>
+                                                        <?php if ($orders->order_status == 'Pending') { ?>
+                                                            <span class="badge  badge-pill badge-danger">Pending</span>
+                                                        <?php } else { ?>
+                                                            <span class="badge  badge-pill badge-success">Paid</span>
+                                                        <?php } ?>
+                                                    </td>
                                                     <td>
                                                         <?php
                                                         if ($order_items <= 0) { ?>
