@@ -16,56 +16,27 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 check_login();
-/* Add Products */
-if (isset($_POST['add_product'])) {
-    $product_name = mysqli_real_escape_string($mysqli, $_POST['product_name']);
-    $product_desc = mysqli_real_escape_string($mysqli, $_POST['product_desc']);
-    $product_category_id = mysqli_real_escape_string($mysqli, $_POST['product_category_id']);
+/* Delete Payment */
+if (isset($_POST['delete_payment'])) {
+    $payment_id = mysqli_real_escape_string($mysqli, $_POST['payment_id']);
+    $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
 
     /* Persist */
-    $sql = "INSERT INTO products(product_name, product_desc, product_category_id) VALUES('{$product_name}', '{$product_desc}', '{$product_category_id}')";
+    $sql = "DELETE FROM payment WHERE payment_id = '{$payment_id}'";
+    $order_sql = "UPDATE `order` SET order_status = 'Pending' WHERE order_id = '{$order_id}'";
+
     $prepare = $mysqli->prepare($sql);
+    $order_prepare = $mysqli->prepare($order_sql);
+
     $prepare->execute();
-    if ($prepare) {
-        $success  = "$product_name Added";
+    $order_prepare->execute();
+    if ($prepare && $order_prepare) {
+        $success = "Payment Deleted";
     } else {
         $err = "Failed!, Please Try Again";
     }
 }
 
-/* Update Products */
-if (isset($_POST['update_product'])) {
-    $product_id = mysqli_real_escape_string($mysqli, $_POST['product_id']);
-    $product_name = mysqli_real_escape_string($mysqli, $_POST['product_name']);
-    $product_desc = mysqli_real_escape_string($mysqli, $_POST['product_desc']);
-    $product_category_id = mysqli_real_escape_string($mysqli, $_POST['product_category_id']);
-
-    /* Persist */
-    $sql = "UPDATE products SET product_name = '{$product_name}', product_desc = '{$product_desc}', product_category_id = '{$product_category_id}'
-    WHERE product_id = '{$product_id}'";
-    $prepare = $mysqli->prepare($sql);
-    $prepare->execute();
-    if ($prepare) {
-        $success = "$product_name Updated";
-    } else {
-        $err = "Failed!, Please Try Again";
-    }
-}
-
-/* Delete Products */
-if (isset($_POST['delete_product'])) {
-    $product_id = mysqli_real_escape_string($mysqli, $_POST['product_id']);
-
-    /* Persist */
-    $sql = "DELETE FROM products WHERE product_id = '{$product_id}'";
-    $prepare = $mysqli->prepare($sql);
-    $prepare->execute();
-    if ($prepare) {
-        $success = "Product Deleted";
-    } else {
-        $err = "Failed!, Please Try Again";
-    }
-}
 require_once('../partials/head.php');
 ?>
 
