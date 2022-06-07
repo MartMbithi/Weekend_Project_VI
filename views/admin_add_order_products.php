@@ -99,8 +99,7 @@ require_once('../partials/head.php');
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12">
-
+                        <div class="col-md-6">
                             <div class="card card-primary card-outline">
                                 <div class="card-header p-2">
                                     <h3 class="text-center">
@@ -117,7 +116,7 @@ require_once('../partials/head.php');
                                         if (!empty($product_array)) {
                                             foreach ($product_array as $key => $value) {
                                         ?>
-                                                <div class="col-sm-3">
+                                                <div class="col-6">
                                                     <form method="post" action="admin_add_order_products?ref=<?php echo $_GET['ref']; ?>&action=add&product_name=<?php echo $product_array[$key]["product_name"]; ?>">
                                                         <div class="card">
                                                             <img src="../public/images/products/<?php echo $product_array[$key]["farmer_product_image"]; ?>" class="card-img-top" style="width:100%; height:10vw; object-fit: cover;">
@@ -142,9 +141,8 @@ require_once('../partials/head.php');
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
+                   
+                        <div class="col-md-6">
                             <?php
                             if (isset($_SESSION["cart_item"])) {
                                 $total_quantity = 0;
@@ -159,28 +157,25 @@ require_once('../partials/head.php');
 
                                     <!-- /.nav-tabs-custom -->
                                     <div class="card-body">
-
-                                        <table class="tbl-cart" cellpadding="10" cellspacing="1">
+                                        <table cellpadding="10" cellspacing="1">
                                             <tbody>
                                                 <tr>
                                                     <th style="text-align:left;">Name</th>
-                                                    <th style="text-align:left;">Code</th>
-                                                    <th style="text-align:right;" width="5%">Quantity</th>
-                                                    <th style="text-align:right;" width="10%">Unit Price</th>
-                                                    <th style="text-align:right;" width="10%">Price</th>
-                                                    <th style="text-align:center;" width="5%">Remove</th>
+                                                    <th style="text-align:right;" width="20%">Quantity</th>
+                                                    <th style="text-align:right;" width="20%">Unit Price</th>
+                                                    <th style="text-align:right;" width="20%">Price</th>
+                                                    <th style="text-align:right;" width="20%">Remove</th>
                                                 </tr>
                                                 <?php
                                                 foreach ($_SESSION["cart_item"] as $item) {
                                                     $item_price = $item["quantity"] * $item["price"];
                                                 ?>
                                                     <tr>
-                                                        <td><img src="<?php echo $item["image"]; ?>" class="cart-item-image" /><?php echo $item["name"]; ?></td>
-                                                        <td><?php echo $item["code"]; ?></td>
+                                                        <td><?php echo $item["product_name"]; ?></td>
                                                         <td style="text-align:right;"><?php echo $item["quantity"]; ?></td>
                                                         <td style="text-align:right;"><?php echo "Ksh " . $item["price"]; ?></td>
                                                         <td style="text-align:right;"><?php echo "Ksh " . number_format($item_price, 2); ?></td>
-                                                        <td style="text-align:center;"><a href="index.php?action=remove&code=<?php echo $item["code"]; ?>" class="btnRemoveAction"><img src="icon-delete.png" alt="Remove Item" /></a></td>
+                                                        <td style="text-align:right;"><a href="admin_add_order_products?ref=<?php echo $_GET['ref']; ?>&action=remove&product_name=<?php echo $item["product_name"]; ?>" class="badge  badge-pill badge-danger"><i class="fas fa-trash"></i> Remove</a></td>
                                                     </tr>
                                                 <?php
                                                     $total_quantity += $item["quantity"];
@@ -191,7 +186,7 @@ require_once('../partials/head.php');
                                                 <tr>
                                                     <td colspan="2" align="right">Total:</td>
                                                     <td align="right"><?php echo $total_quantity; ?></td>
-                                                    <td align="right" colspan="2"><strong><?php echo "$ " . number_format($total_price, 2); ?></strong></td>
+                                                    <td align="right" colspan="1"><strong><?php echo "Ksh " . number_format($total_price, 2); ?></strong></td>
                                                     <td></td>
                                                 </tr>
                                             </tbody>
