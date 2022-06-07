@@ -74,9 +74,17 @@ $stmt->close();
 
 
 /* Overall Income */
-$query = "SELECT SUM(order_item_cost)  FROM `order_items`";
-$stmt = $mysqli->prepare($query);
-$stmt->execute();
-$stmt->bind_result($payments);
-$stmt->fetch();
-$stmt->close();
+$ret = "SELECT * FROM order_items oi 
+INNER JOIN `order` o ON o.order_id = oi.order_item_order_id
+INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
+INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
+WHERE o.order_status = 'Paid'";
+$stmt = $mysqli->prepare($ret);
+$stmt->execute(); //ok
+$res = $stmt->get_result();
+$payments = 0;
+while ($product = $res->fetch_object()) {
+    /* Compute Total Payable Amout */
+    $unit_paid = ($product->order_item_cost) * ($product->order_item_quantity_ordered);
+    $payments += $unit_paid;
+}
