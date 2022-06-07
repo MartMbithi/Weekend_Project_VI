@@ -110,7 +110,7 @@ if (isset($_POST['delete_product'])) {
     $prepare = $mysqli->prepare($sql);
     $prepare->execute();
     /* Delete Product Image From Storage */
-    unlink('../public/images/product/' . $farmer_product_image);
+    unlink('../public/images/products/' . $farmer_product_image);
     if ($prepare) {
         $success = "Farmer Product Deleted";
     } else {
@@ -354,6 +354,7 @@ require_once('../partials/head.php');
                                                                     <br>
                                                                     <!-- Hide This -->
                                                                     <input type="hidden" name="farmer_product_id" value="<?php echo $product->farmer_product_id; ?>">
+                                                                    <input type="hidden" name="farmer_product_image" value="<?php echo $product->farmer_product_image; ?>">
                                                                     <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
                                                                     <button type="submit" class="text-center btn btn-danger" name="delete_product">Delete</button>
                                                                 </div>
