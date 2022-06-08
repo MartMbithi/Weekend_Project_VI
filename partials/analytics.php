@@ -34,10 +34,10 @@ if ($_SESSION['login_rank'] == 'Farmer') {
         $stmt->close();
 
         /* Unpaid Orders */
-        $query = "SELECT COUNT(*)  FROM `order` o
-        INNER JOIN order_items op ON op.order_item_order_id = o.order_id
-        INNER JOIN farmer_products fp ON fp.farmer_product_product_id = op.order_item_farmer_product_id 
-        WHERE o.order_status = 'Pending' AND fp.farmer_product_farmer_id = '{$farmer_id}'";
+        $query = "SELECT COUNT(*) FROM `order` o 
+        INNER JOIN order_items oi ON o.order_id = oi.order_item_order_id 
+        INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id 
+        WHERE fp.farmer_product_farmer_id = '{$farmer_id}' AND o.order_status = 'Pending'";
         $stmt = $mysqli->prepare($query);
         $stmt->execute();
         $stmt->bind_result($pending);
@@ -45,10 +45,10 @@ if ($_SESSION['login_rank'] == 'Farmer') {
         $stmt->close();
 
         /* Paid Orders */
-        $query = "SELECT COUNT(*)  FROM `order` o
-        INNER JOIN order_items op ON op.order_item_order_id = o.order_id
-        INNER JOIN farmer_products fp ON fp.farmer_product_product_id = op.order_item_farmer_product_id 
-        WHERE o.order_status = 'Paid' AND fp.farmer_product_farmer_id = '{$farmer_id}'";
+        $query = "SELECT COUNT(*) FROM `order` o 
+        INNER JOIN order_items oi ON o.order_id = oi.order_item_order_id 
+        INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id 
+        WHERE fp.farmer_product_farmer_id = '{$farmer_id}' AND o.order_status = 'Paid'";
         $stmt = $mysqli->prepare($query);
         $stmt->execute();
         $stmt->bind_result($paid);
@@ -56,10 +56,10 @@ if ($_SESSION['login_rank'] == 'Farmer') {
         $stmt->close();
 
         /* Total Orders */
-        $query = "SELECT COUNT(*)  FROM `order` o
-        INNER JOIN order_items op ON op.order_item_order_id = o.order_id
-        INNER JOIN farmer_products fp ON fp.farmer_product_product_id = op.order_item_farmer_product_id 
-        WHERE  fp.farmer_product_farmer_id = '{$farmer_id}' ";
+        $query = "SELECT COUNT(*) FROM `order` o 
+        INNER JOIN order_items oi ON o.order_id = oi.order_item_order_id 
+        INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id 
+        WHERE fp.farmer_product_farmer_id = '{$farmer_id}'";
         $stmt = $mysqli->prepare($query);
         $stmt->execute();
         $stmt->bind_result($orders);
