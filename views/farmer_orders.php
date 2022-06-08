@@ -121,14 +121,16 @@ require_once('../partials/head.php');
                                                 INNER JOIN customer c ON c.customer_id = o.order_customer_id
                                                 INNER JOIN order_items oi ON o.order_id = oi.order_item_order_id 
                                                 INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id 
-                                                WHERE fp.farmer_product_farmer_id = '{$farmer_id}'";
+                                                WHERE fp.farmer_product_farmer_id = '{$farmer_id}'
+                                                GROUP BY o.order_ref";
                                                 $stmt = $mysqli->prepare($ret);
                                                 $stmt->execute(); //ok
                                                 $res = $stmt->get_result();
                                                 while ($orders = $res->fetch_object()) {
                                                     /* Count Number Of Products Ordered */
-                                                    $query = "SELECT SUM(order_item_quantity_ordered)  FROM order_items
-                                                    WHERE order_item_order_id = '{$orders->order_id}'";
+                                                    $query = "SELECT SUM(order_item_quantity_ordered)  FROM order_items oi
+                                                    INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id 
+                                                    WHERE oi.order_item_order_id = '{$orders->order_id}' AND fp.farmer_product_farmer_id = '{$farmer_id}'";
                                                     $stmt = $mysqli->prepare($query);
                                                     $stmt->execute();
                                                     $stmt->bind_result($order_items);
@@ -156,15 +158,11 @@ require_once('../partials/head.php');
                                                         </td>
                                                         <td>
                                                             <?php
-                                                            if ($order_items <= 0) { ?>
-                                                                <a href="admin_add_order_products?ref=<?php echo $orders->order_ref; ?>" class="badge  badge-pill badge-success"><em class="fas fa-shopping-cart"></em> Add Products</a>
-
-                                                            <?php }
                                                             if ($orders->order_status == 'Pending') {
                                                             ?>
                                                                 <a data-toggle="modal" href="#pay_<?php echo $orders->order_id; ?>" class="badge  badge-pill badge-primary"><em class="fas fa-check"></em> Pay Order</a>
                                                             <?php } ?>
-                                                            <a href="admin_view_order?order=<?php echo $orders->order_id; ?>&ref=<?php echo $orders->order_ref; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-eye"></em> View Order</a>
+                                                            <a href="farmer_view_order?order=<?php echo $orders->order_id; ?>&ref=<?php echo $orders->order_ref; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-eye"></em> View Order</a>
                                                             <a data-toggle="modal" href="#delete_<?php echo $orders->order_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete Order</a>
                                                         </td>
                                                     </tr>
