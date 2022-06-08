@@ -215,12 +215,6 @@ if ($_SESSION['login_rank'] == 'Admin') {
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="farmer_reports_products" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Farmer Products</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="farmer_reports_orders" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Orders</p>
