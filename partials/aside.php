@@ -182,7 +182,7 @@ if ($_SESSION['login_rank'] == 'Admin') {
                     </li>
                     <li class="nav-item">
                         <a href="farmer_products" class="nav-link">
-                            <i class="nav-icon fas fa-list"></i>
+                            <i class="nav-icon fas fa-carrot"></i>
                             <p>
                                 Farm Products
                             </p>
