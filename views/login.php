@@ -84,6 +84,7 @@ if (isset($_POST['login'])) {
     $rs = $stmt->fetch();
     /* Persist Sessions */
     $_SESSION['login_id'] = $login_id;
+    $_SESSION['login_rank'] = $login_rank;
 
     /* Determiner Where To Redirect Based On Access Leveles */
     if ($rs && $login_rank == 'Admin') {
