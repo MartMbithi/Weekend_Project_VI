@@ -59,7 +59,7 @@ require_once('../partials/head.php');
                     <div class="row">
 
                         <div class="col-12 col-sm-6 col-md-3">
-                            <a href="admin_orders" class="text-dark">
+                            <a href="farmer_orders" class="text-dark">
                                 <div class="info-box mb-3">
                                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
 
@@ -73,7 +73,7 @@ require_once('../partials/head.php');
                             </a>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
-                            <a href="admin_orders" class="text-dark">
+                            <a href="farmer_orders" class="text-dark">
                                 <div class="info-box mb-3">
                                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
 
@@ -87,7 +87,7 @@ require_once('../partials/head.php');
                             </a>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
-                            <a href="admin_orders" class="text-dark">
+                            <a href="farmer_orders" class="text-dark">
                                 <div class="info-box mb-3">
                                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clipboard-list"></i></span>
 
@@ -101,7 +101,7 @@ require_once('../partials/head.php');
                             </a>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
-                            <a href="admin_payments" class="text-dark">
+                            <a href="farmer_payments" class="text-dark">
                                 <div class="info-box mb-3">
                                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill-alt"></i></span>
 
