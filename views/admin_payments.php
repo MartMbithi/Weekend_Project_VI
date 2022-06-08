@@ -100,7 +100,7 @@ require_once('../partials/head.php');
                                                 INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
                                                 INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
                                                 INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id
-                                                WHERE o.order_id = '$payments->order_id'";
+                                                WHERE o.order_id = '{$payments->order_id}'";
                                                 $stmt = $mysqli->prepare($sql);
                                                 $stmt->execute(); //ok
                                                 $return = $stmt->get_result();
