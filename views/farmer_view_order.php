@@ -75,8 +75,8 @@ require_once('../partials/head.php');
                                     <!-- /.nav-tabs-custom -->
                                     <?php
                                     $ret = "SELECT * FROM  `order` o 
-                                INNER JOIN customer c ON c.customer_id = o.order_customer_id
-                                WHERE  o.order_id = '{$_GET['order']}'";
+                                    INNER JOIN customer c ON c.customer_id = o.order_customer_id
+                                    WHERE  o.order_id = '{$_GET['order']}'";
                                     $stmt = $mysqli->prepare($ret);
                                     $stmt->execute(); //ok
                                     $res = $stmt->get_result();
@@ -122,11 +122,11 @@ require_once('../partials/head.php');
                                     $res = $stmt->get_result();
                                     while ($payment = $res->fetch_object()) {
                                         $ret = "SELECT * FROM order_items oi 
-                                    INNER JOIN `order` o ON o.order_id = oi.order_item_order_id
-                                    INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
-                                    INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
-                                    INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id
-                                    WHERE o.order_id = '{$_GET['order']}'";
+                                        INNER JOIN `order` o ON o.order_id = oi.order_item_order_id
+                                        INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
+                                        INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
+                                        INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id
+                                        WHERE o.order_id = '{$_GET['order']}' AND f.farmer_id = '{$farmer_id}'";
                                         $stmt = $mysqli->prepare($ret);
                                         $stmt->execute(); //ok
                                         $res = $stmt->get_result();
@@ -181,11 +181,11 @@ require_once('../partials/head.php');
                                             <tbody>
                                                 <?php
                                                 $ret = "SELECT * FROM order_items oi 
-                                            INNER JOIN `order` o ON o.order_id = oi.order_item_order_id
-                                            INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
-                                            INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
-                                            INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id
-                                            WHERE o.order_id = '{$_GET['order']}' AND f.farmer_id = '{$farmer_id}'";
+                                                INNER JOIN `order` o ON o.order_id = oi.order_item_order_id
+                                                INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
+                                                INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
+                                                INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id
+                                                WHERE o.order_id = '{$_GET['order']}' AND f.farmer_id = '{$farmer_id}'";
                                                 $stmt = $mysqli->prepare($ret);
                                                 $stmt->execute(); //ok
                                                 $res = $stmt->get_result();
