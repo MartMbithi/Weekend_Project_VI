@@ -27,7 +27,10 @@ require_once('../partials/head.php');
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <?php require_once('../partials/aside.php'); ?>
+        <?php require_once('../partials/aside.php');
+        /* Load This Partial With Farmer ID */
+        $farmer_login_id = $_SESSION['login_id'];
+        ?>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -140,7 +143,9 @@ require_once('../partials/head.php');
                                             INNER JOIN order_items oi ON oi.order_item_order_id = o.order_id 
                                             INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
                                             INNER JOIN products p ON p.product_id = fp.farmer_product_product_id
-                                            INNER JOIN customer c ON c.customer_id = o.order_customer_id";
+                                            INNER JOIN customer c ON c.customer_id = o.order_customer_id
+                                            INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id
+                                            WHERE f.farmer_login_id = '{$farmer_login_id}'";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
