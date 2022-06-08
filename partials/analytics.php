@@ -72,7 +72,7 @@ if ($_SESSION['login_rank'] == 'Farmer') {
         INNER JOIN `order` o ON o.order_id = oi.order_item_order_id
         INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
         INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
-        WHERE o.order_status = 'Paid'";
+        WHERE o.order_status = 'Paid' AND fp.farmer_product_farmer_id = '{$farmer_id}'";
         $stmt = $mysqli->prepare($ret);
         $stmt->execute(); //ok
         $res = $stmt->get_result();
