@@ -22,7 +22,16 @@
                                 <li class="has-submenu">
                                     <a href="javascript:void(0);">Categories</a>
                                     <ul class="submenu">
-                                        <li><a href="landing_category?view=">Services</a></li>
+                                        <?php
+                                        $ret = "SELECT * FROM categories 
+                                        ORDER BY category_name ASC";
+                                        $stmt = $mysqli->prepare($ret);
+                                        $stmt->execute(); //ok
+                                        $res = $stmt->get_result();
+                                        while ($category = $res->fetch_object()) {
+                                        ?>
+                                            <li><a href="landing_category?view=<?php echo $category->category_id; ?>"><?php echo $category->category_name; ?></a></li>
+                                        <?php } ?>
                                     </ul>
                                 </li>
                                 <li>

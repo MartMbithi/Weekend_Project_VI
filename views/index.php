@@ -11,6 +11,8 @@
  * can only be MART DEVELOPERS INC.
  *
  */
+session_start();
+require_once('../config/config.php');
 require_once('../partials/landing_head.php');
 ?>
 
@@ -35,11 +37,10 @@ require_once('../partials/landing_head.php');
                     <div class="container">
                         <div class="row">
                             <div class="col-12 col-sm-10 col-md-9 col-lg-9 col-xl-8">
-                                <h2 class="__title"><span>Get the</span> Fresh Food <span>from our</span> Agro Market</h2>
-
+                                <h2 class="__title"><span>Get The</span> Fresh Products <span>From </span> Online Farmers Marketplace </h2>
                                 <p>
-                                    <span class="d-none d-sm-block"><a class="custom-btn custom-btn--big custom-btn--style-1" href="#">Discover</a></span>
-                                    <span class="d-block d-sm-none"><a class="custom-btn custom-btn--small custom-btn--style-1" href="#">Discover</a></span>
+                                    <span class="d-none d-sm-block"><a class="custom-btn custom-btn--big custom-btn--style-1" href="products">Discover</a></span>
+                                    <span class="d-block d-sm-none"><a class="custom-btn custom-btn--small custom-btn--style-1" href="products">Discover</a></span>
                                 </p>
                             </div>
                         </div>
@@ -55,15 +56,10 @@ require_once('../partials/landing_head.php');
                     <div class="container">
                         <div class="row justify-content-center text-center">
                             <div class="col-12 col-md-9 col-lg-8 col-xl-7">
-                                <h2 class="__title text-white"><span>Fresh</span> Blueberries & Citrus <span>from Agro</span></h2>
-
-                                <p class="text-white">
-                                    Bitterling duckbilled barracudina New Zealand sand diver, "oldwife sarcastic fringehead sea toad bighead carp sculpin tadpole fish creek chub." Dottyback sand goby
-                                </p>
-
+                                <h2 class="__title text-white"><span>Fresh & </span> Healthy <span>Farm Products </span></h2>
                                 <p class="mt-5 mt-md-8">
-                                    <span class="d-none d-sm-block"><a class="custom-btn custom-btn--big custom-btn--style-3" href="#">Discover</a></span>
-                                    <span class="d-block d-sm-none"><a class="custom-btn custom-btn--small custom-btn--style-3" href="#">Discover</a></span>
+                                    <span class="d-none d-sm-block"><a class="custom-btn custom-btn--big custom-btn--style-3" href="products">Discover</a></span>
+                                    <span class="d-block d-sm-none"><a class="custom-btn custom-btn--small custom-btn--style-3" href="products">Discover</a></span>
                                 </p>
                             </div>
                         </div>
