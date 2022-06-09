@@ -66,10 +66,15 @@ include('../partials/landing_head.php');
                                         <div class="col-12 col-lg-7">
                                             <div class="content-container">
                                                 <h3 class="__name"><?php echo $product->product_name; ?></h3>
-
+                                                <br>
                                                 <div class="__categories">
                                                     Category:
                                                     <span><?php echo $product->category_name; ?></span>
+                                                </div>
+                                                <br>
+                                                <div class="__categories">
+                                                    Farmer:
+                                                    <span><?php echo $product->farmer_name; ?></span>
                                                 </div>
 
                                                 <div class="product-price">
@@ -101,23 +106,24 @@ include('../partials/landing_head.php');
                                 <h2>Related <span>Products</span></h2>
                                 <div class="spacer py-2"></div>
 
-                                <?php
-                                $cat = $_GET['cat'];
-                                $return = "SELECT * FROM farmer_products fp 
-                                INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
-                                INNER JOIN categories c ON c.category_id = p.product_category_id
-                                INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id
-                                AND c.category_id = '{$cat}' AND fp.farmer_product_id != '{$viewg}'";
-                                $ret_stmt = $mysqli->prepare($return);
-                                $ret_stmt->execute(); //ok
-                                $result = $ret_stmt->get_result();
-                                while ($related_product = $result->fetch_object()) {
 
-                                ?>
-                                    <!-- start goods -->
-                                    <div class="goods goods--style-1">
-                                        <div class="__inner">
-                                            <div class="row">
+                                <!-- start goods -->
+                                <div class="goods goods--style-1">
+                                    <div class="__inner">
+                                        <div class="row">
+                                            <?php
+                                            $cat = $_GET['cat'];
+                                            $return = "SELECT * FROM farmer_products fp 
+                                            INNER JOIN products p ON p.product_id  = fp.farmer_product_product_id 
+                                            INNER JOIN categories c ON c.category_id = p.product_category_id
+                                            INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id
+                                            AND c.category_id = '{$cat}' AND fp.farmer_product_id != '{$view}'";
+                                            $ret_stmt = $mysqli->prepare($return);
+                                            $ret_stmt->execute(); //ok
+                                            $result = $ret_stmt->get_result();
+                                            while ($related_product = $result->fetch_object()) {
+
+                                            ?>
                                                 <!-- start item -->
                                                 <div class="col-12 col-sm-6 col-lg-4">
                                                     <div class="__item">
@@ -129,7 +135,7 @@ include('../partials/landing_head.php');
                                                             <h4 class="h6 __title"><a href="#"><?php echo $related_product->product_name; ?></a></h4>
 
                                                             <div class="__category"><a href="#"><?php echo $related_product->category_name; ?></a></div>
-
+                                                            <div class="__category"><a href="#">Farmer: <?php echo $related_product->farmer_name; ?></a></div>
                                                             <div class="product-price">
                                                                 <span class="product-price__item product-price__item--new"><?php echo number_format($related_product->farmer_product_price, 2); ?></span>
                                                             </div>
@@ -139,12 +145,11 @@ include('../partials/landing_head.php');
                                                     </div>
                                                 </div>
                                                 <!-- end item -->
-
-                                            </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
-                                    <!-- end goods -->
-                                <?php } ?>
+                                </div>
+                                <!-- end goods -->
                             </div>
                             <div class="col-12 my-6 d-md-none"></div>
                         </div>
