@@ -106,7 +106,7 @@ if (isset($_POST['login'])) {
 require_once('../partials/head.php');
 ?>
 
-<body class="hold-transition login-page" style="background-image: url('../public/images/background.jpg'); background-repeat: no-repeat; background-size: cover; ">
+<body class="hold-transition login-page" style="background-image: url('../public/images/landing/img_9.jpg'); background-repeat: no-repeat; background-size: cover; ">
     <div class="login-box">
         <div class="login-logo">
             <a href="" class="text-light"><b>Online Farmers Market Platform</a>
