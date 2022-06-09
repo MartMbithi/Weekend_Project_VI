@@ -15,6 +15,26 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
+/* Delete Payments */
+if (isset($_POST['delete_payment'])) {
+    $payment_id = mysqli_real_escape_string($mysqli, $_POST['payment_id']);
+    $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
+
+    /* Persist */
+    $sql = "DELETE FROM payment WHERE payment_id = '{$payment_id}'";
+    $order_sql = "UPDATE `order` SET order_status = 'Pending' WHERE order_id = '{$order_id}'";
+
+    $prepare = $mysqli->prepare($sql);
+    $order_prepare = $mysqli->prepare($order_sql);
+
+    $prepare->execute();
+    $order_prepare->execute();
+    if ($prepare && $order_prepare) {
+        $success = "Payment Deleted";
+    } else {
+        $err = "Failed!, Please Try Again";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
@@ -102,7 +122,7 @@ require_once('../partials/head.php');
                                                             <?php echo $payments->order_ref; ?>
                                                         </td>
                                                         <td><?php echo $payments->payment_ref; ?></td>
-                                                        <td>Ksh: <?php echo number_format($total_paid, 2); ?></td>
+                                                        <td>Ksh <?php echo number_format($total_paid, 2); ?></td>
                                                         <td>
                                                             <?php echo date('d M Y g:ia', strtotime($payments->payment_date)); ?>
                                                         </td>
