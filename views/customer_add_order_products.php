@@ -24,22 +24,21 @@ if (!empty($_GET["action"])) {
         case "add":
             if (!empty($_POST["quantity"])) {
                 $productByCode = $db_handle->runQuery("SELECT * FROM products p INNER JOIN farmer_products fp 
-                ON fp.farmer_product_product_id = p.product_id WHERE fp.farmer_product_product_id ='" . $_GET["product_id"] . "'");
+                ON fp.farmer_product_product_id = p.product_id WHERE fp.farmer_product_product_id ='" . $_GET["farmer_product_id"] . "'");
                 $itemArray = array(
-                    $productByCode[0]["product_id"] =>
+                    $productByCode[0]["farmer_product_id"] =>
                     array(
-                        'product_id' => $productByCode[0]["product_id"],
+                        'farmer_product_id' => $productByCode[0]["farmer_product_id"],
                         'product_name' => $productByCode[0]["product_name"],
                         'quantity' => $_POST["quantity"],
                         'price' => $productByCode[0]["farmer_product_price"],
-                        'farmer_product_id' => $productByCode[0]["farmer_product_id"]
                     )
                 );
 
                 if (!empty($_SESSION["cart_item"])) {
-                    if (in_array($productByCode[0]["product_id"], array_keys($_SESSION["cart_item"]))) {
+                    if (in_array($productByCode[0]["farmer_product_id"], array_keys($_SESSION["cart_item"]))) {
                         foreach ($_SESSION["cart_item"] as $k => $v) {
-                            if ($productByCode[0]["product_id"] == $k) {
+                            if ($productByCode[0]["farmer_product_id"] == $k) {
                                 if (empty($_SESSION["cart_item"][$k]["quantity"])) {
                                     $_SESSION["cart_item"][$k]["quantity"] = 0;
                                 }
@@ -57,7 +56,7 @@ if (!empty($_GET["action"])) {
         case "remove":
             if (!empty($_SESSION["cart_item"])) {
                 foreach ($_SESSION["cart_item"] as $k => $v) {
-                    if ($_GET["product_id"] == $k)
+                    if ($_GET["farmer_product_id"] == $k)
                         unset($_SESSION["cart_item"][$k]);
                     if (empty($_SESSION["cart_item"]))
                         unset($_SESSION["cart_item"]);
@@ -178,7 +177,7 @@ require_once('../partials/head.php');
                                                 foreach ($product_array as $key => $value) {
                                             ?>
                                                     <div class="col-4 Product_Name">
-                                                        <form method="post" action="customer_add_order_products?ref=<?php echo $_GET['ref']; ?>&action=add&product_id=<?php echo $product_array[$key]["product_id"]; ?>">
+                                                        <form method="post" action="customer_add_order_products?ref=<?php echo $_GET['ref']; ?>&action=add&farmer_product_id=<?php echo $product_array[$key]["farmer_product_id"]; ?>">
                                                             <div class="card">
                                                                 <img src="../public/images/products/<?php echo $product_array[$key]["farmer_product_image"]; ?>" class="card-img-top" style="width:100%; height:10vw; object-fit: cover;">
                                                                 <div class="card-body">
@@ -241,7 +240,7 @@ require_once('../partials/head.php');
                                                             <td style="text-align:right;"><?php echo $item["quantity"]; ?></td>
                                                             <td style="text-align:right;"><?php echo "Ksh " . $item["price"]; ?></td>
                                                             <td style="text-align:right;"><?php echo "Ksh " . number_format($item_price, 2); ?></td>
-                                                            <td style="text-align:right;"><a href="customer_add_order_products?ref=<?php echo $_GET['ref']; ?>&action=remove&product_id=<?php echo $item["product_id"]; ?>" class="badge  badge-pill badge-danger"><i class="fas fa-trash"></i> Remove</a></td>
+                                                            <td style="text-align:right;"><a href="customer_add_order_products?ref=<?php echo $_GET['ref']; ?>&action=remove&farmer_product_id=<?php echo $item["farmer_product_id"]; ?>" class="badge  badge-pill badge-danger"><i class="fas fa-trash"></i> Remove</a></td>
                                                         </tr>
                                                     <?php
                                                         $total_quantity += $item["quantity"];
