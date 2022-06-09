@@ -115,8 +115,6 @@ if ($_SESSION['login_rank'] == 'Farmer') {
 
         /* Total Orders */
         $query = "SELECT COUNT(*) FROM `order` o 
-        INNER JOIN order_items oi ON o.order_id = oi.order_item_order_id 
-        INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id 
         WHERE o.order_customer_id = '{$customer_id}'";
         $stmt = $mysqli->prepare($query);
         $stmt->execute();

@@ -8,31 +8,33 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse order-3" id="navbarCollapse">
-            <!-- Left navbar links -->
+
+        <!-- Right navbar links -->
+        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="customer_home" class="nav-link">Home</a>
+                    <a href="customer_home" class="nav-link">
+                        <i class="fas fa-home"></i> Home
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a href="customer_orders" class="nav-link">Orders</a>
+                    <a href="customer_orders" class="nav-link">
+                        <i class="fas fa-clipboard-list"></i> Orders
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a href="customer_orders" class="nav-link">Payments</a>
+                <li class="nav-item text-dark">
+                    <a href="customer_payments" class="nav-link">
+                        <i class="fas fa-hand-holding-usd"></i> Payments
+                    </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Reports</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                        <li><a href="#" class="dropdown-item">Orders </a></li>
-                        <li><a href="#" class="dropdown-item">Payments</a></li>
+                        <li><a href="customer_report_order" class="dropdown-item">Orders </a></li>
+                        <li><a href="customer_report_payments" class="dropdown-item">Payments</a></li>
                     </ul>
                 </li>
             </ul>
-
-        </div>
-
-        <!-- Right navbar links -->
-        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
             <!-- Messages Dropdown Menu -->
             <li class="nav-item dropdown">
                 <a class="nav-link text-primary" href="customer_profile">

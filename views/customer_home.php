@@ -23,97 +23,170 @@ require_once('../partials/head.php');
     <div class="wrapper">
 
         <!-- Navbar -->
-        <?php require_once('../partials/customer_nav.php'); ?>
-        <!-- /.navbar -->
+        <?php require_once('../partials/customer_nav.php');
+        $customer = $_SESSION['login_id'];
+        $ret = "SELECT * FROM customer WHERE customer_login_id = '{$customer}'";
+        $stmt = $mysqli->prepare($ret);
+        $stmt->execute(); //ok
+        $res = $stmt->get_result();
+        while ($cus = $res->fetch_object()) {
+            $customer_id = $cus->customer_id;
+        ?>
+            <!-- /.navbar -->
 
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0 text-dark"> Top Navigation <small>Example 3.0</small></h1>
-                        </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                                <li class="breadcrumb-item active">Top Navigation</li>
-                            </ol>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content-header -->
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                    <div class="container">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="m-0 text-dark"> Hello, <?php echo $cus->customer_name; ?></h1>
+                            </div><!-- /.col -->
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active">Customer Dashboard</li>
+                                </ol>
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.content-header -->
 
-            <!-- Main content -->
-            <div class="content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
+                <!-- Main content -->
+                <div class="content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <a href="customer_orders" class="text-dark">
+                                    <div class="info-box mb-3">
+                                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
 
-                                    <p class="card-text">
-                                        Some quick example text to build on the card title and make up the bulk of the card's
-                                        content.
-                                    </p>
-
-                                    <a href="#" class="card-link">Card link</a>
-                                    <a href="#" class="card-link">Another link</a>
-                                </div>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Unpaid Orders</span>
+                                            <span class="info-box-number"><?php echo $pending; ?></span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                    <!-- /.info-box -->
+                                </a>
                             </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <a href="customer_orders" class="text-dark">
+                                    <div class="info-box mb-3">
+                                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
 
-                            <div class="card card-primary card-outline">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Paid Orders</span>
+                                            <span class="info-box-number"><?php echo $paid; ?></span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                    <!-- /.info-box -->
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <a href="customer_orders" class="text-dark">
+                                    <div class="info-box mb-3">
+                                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clipboard-list"></i></span>
 
-                                    <p class="card-text">
-                                        Some quick example text to build on the card title and make up the bulk of the card's
-                                        content.
-                                    </p>
-                                    <a href="#" class="card-link">Card link</a>
-                                    <a href="#" class="card-link">Another link</a>
-                                </div>
-                            </div><!-- /.card -->
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Total Orders</span>
+                                            <span class="info-box-number"><?php echo $orders; ?></span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                    <!-- /.info-box -->
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <a href="customer_payments" class="text-dark">
+                                    <div class="info-box mb-3">
+                                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill-alt"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Overall Expenditure</span>
+                                            <span class="info-box-number">Ksh <?php echo number_format($payments, 2); ?></span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                    <!-- /.info-box -->
+                                </a>
+                            </div>
                         </div>
-                        <!-- /.col-md-6 -->
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title m-0">Featured</h5>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-outline card-success">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Recent Orders</h3>
+                                        <!-- /.card-tools -->
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table class="table table-bordered text-truncate" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Order REF</th>
+                                                    <th>Product Details</th>
+                                                    <th>Farmer Details</th>
+                                                    <th>QTY Ordered</th>
+                                                    <th>Order Price</th>
+                                                    <th>Order Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $ret = "SELECT * FROM `order` o 
+                                                INNER JOIN order_items oi ON oi.order_item_order_id = o.order_id 
+                                                INNER JOIN farmer_products fp ON fp.farmer_product_id = oi.order_item_farmer_product_id
+                                                INNER JOIN products p ON p.product_id = fp.farmer_product_product_id
+                                                INNER JOIN farmer f ON f.farmer_id = fp.farmer_product_farmer_id
+                                                WHERE o.order_customer_id = '{$customer_id}'";
+                                                $stmt = $mysqli->prepare($ret);
+                                                $stmt->execute(); //ok
+                                                $res = $stmt->get_result();
+                                                while ($orders = $res->fetch_object()) {
+                                                ?>
+                                                    <tr>
+                                                        <td><?php echo $orders->order_ref; ?></td>
+                                                        <td><?php echo $orders->product_name; ?></td>
+                                                        <td>
+                                                            Name: <?php echo $orders->farmer_name; ?> <br>
+                                                            Phone No: <?php echo $orders->farmer_phone; ?>
+                                                        </td>
+                                                        <td><?php echo $orders->order_item_quantity_ordered; ?></td>
+                                                        <td>Ksh <?php echo number_format(($orders->order_item_quantity_ordered * $orders->farmer_product_price), 2); ?></td>
+                                                        <td>
+                                                            <?php
+                                                            if ($orders->order_status == 'Paid') {
+                                                            ?>
+                                                                <span class="badge  badge-pill badge-success">Paid</span>
+                                                            <?php } else { ?>
+                                                                <span class="badge  badge-pill badge-danger">Pending</span>
+                                                            <?php } ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
                                 </div>
-                                <div class="card-body">
-                                    <h6 class="card-title">Special title treatment</h6>
-
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
+                                <!-- /.card -->
                             </div>
-
-                            <div class="card card-primary card-outline">
-                                <div class="card-header">
-                                    <h5 class="card-title m-0">Featured</h5>
-                                </div>
-                                <div class="card-body">
-                                    <h6 class="card-title">Special title treatment</h6>
-
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
+                            <!-- /.col -->
                         </div>
-                        <!-- /.col-md-6 -->
-                    </div>
-                    <!-- /.row -->
-                </div><!-- /.container-fluid -->
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.content -->
             </div>
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
+            <!-- /.content-wrapper -->
 
+        <?php } ?>
 
         <!-- Main Footer -->
         <?php require_once('../partials/footer.php'); ?>
