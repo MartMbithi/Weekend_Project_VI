@@ -178,7 +178,7 @@ require_once('../partials/head.php');
                                                         <td>
                                                             <?php
                                                             if ($order_items <= 0) { ?>
-                                                                <a href="admin_add_order_products?ref=<?php echo $orders->order_ref; ?>" class="badge  badge-pill badge-success"><em class="fas fa-shopping-cart"></em> Add Products</a>
+                                                                <a href="customer_add_order_products?ref=<?php echo $orders->order_ref; ?>" class="badge  badge-pill badge-success"><em class="fas fa-shopping-cart"></em> Add Products</a>
 
                                                             <?php }
                                                             if ($orders->order_status == 'Pending') {
