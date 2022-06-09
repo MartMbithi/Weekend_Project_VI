@@ -185,7 +185,7 @@ require_once('../partials/head.php');
                                                             ?>
                                                                 <a data-toggle="modal" href="#pay_<?php echo $orders->order_id; ?>" class="badge  badge-pill badge-primary"><em class="fas fa-check"></em> Pay Order</a>
                                                             <?php } ?>
-                                                            <a href="admin_view_order?order=<?php echo $orders->order_id; ?>&ref=<?php echo $orders->order_ref; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-eye"></em> View Order</a>
+                                                            <a href="customer_view_order?order=<?php echo $orders->order_id; ?>&ref=<?php echo $orders->order_ref; ?>" class="badge  badge-pill badge-warning"><em class="fas fa-eye"></em> View Order</a>
                                                             <a data-toggle="modal" href="#delete_<?php echo $orders->order_id; ?>" class="badge  badge-pill badge-danger"><em class="fas fa-trash"></em> Delete Order</a>
                                                         </td>
                                                     </tr>
