@@ -166,6 +166,10 @@ require_once('../partials/head.php');
                                     <!-- /.nav-tabs-custom -->
                                     <div class="card-body">
                                         <div class="row">
+                                            <div class="col-12">
+                                                <input class="form-control" type="text" id="Product_Search" onkeyup="FilterFunction()" placeholder="Search Products">
+                                                <br>
+                                            </div>
                                             <?php
                                             $product_array = $db_handle->runQuery("SELECT * FROM products p INNER JOIN farmer_products fp 
                                         ON fp.farmer_product_product_id = p.product_id ORDER BY p.product_name ASC");
