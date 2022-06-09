@@ -56,6 +56,13 @@ if (isset($_POST['register'])) {
             }
         }
     } else {
+        /* Process Customer Details */
+        $customer_name = mysqli_real_escape_string($mysqli, $_POST['customer_name']);
+        $customer_phone = mysqli_real_escape_string($mysqli, $_POST['customer_phone']);
+        $customer_email = mysqli_real_escape_string($mysqli, $_POST['customer_email']);
+        $customer_login_id  = mysqli_real_escape_string($mysqli, $sys_gen_id_alt_1);
+        $login_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['login_password'])));
+
         /* Prevent Double Entries */
         $sql = "SELECT * FROM  customer   WHERE customer_email ='{$customer_email}' || customer_phone = '{$customer_phone}' ";
         $res = mysqli_query($mysqli, $sql);
@@ -68,13 +75,6 @@ if (isset($_POST['register'])) {
                 $err = 'Account With That Phone Number Or Email  Already Exists';
             }
         } else {
-            /* Process Customer Details */
-            $customer_name = mysqli_real_escape_string($mysqli, $_POST['customer_name']);
-            $customer_phone = mysqli_real_escape_string($mysqli, $_POST['customer_phone']);
-            $customer_email = mysqli_real_escape_string($mysqli, $_POST['customer_email']);
-            $customer_login_id  = mysqli_real_escape_string($mysqli, $sys_gen_id_alt_1);
-            $login_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['login_password'])));
-
             /* Persist */
             $sql = "INSERT INTO customer (customer_name, customer_phone, customer_email, customer_login_id)
             VALUES('{$customer_name}', '{$customer_phone}', '{$customer_email}', '{$customer_login_id}')";
