@@ -16,7 +16,7 @@
                         <nav id="top-bar__navigation" class="top-bar__navigation navigation" role="navigation">
                             <ul>
                                 <li>
-                                    <a href="">Home</a>
+                                    <a href="../">Home</a>
                                 </li>
 
                                 <li class="has-submenu">
