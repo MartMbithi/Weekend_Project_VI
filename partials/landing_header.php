@@ -37,9 +37,6 @@
                                 <li>
                                     <a href="landing_products">Products</a>
                                 </li>
-                                <li>
-                                    <a href="landing_farmers">Farmers</a>
-                                </li>
                                 <li class="li-btn">
                                     <a class="custom-btn custom-btn--small custom-btn--style-2" href="login">Sign In</a>
                                 </li>

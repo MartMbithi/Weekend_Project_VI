@@ -132,7 +132,7 @@ include('../partials/landing_head.php');
                                                         </figure>
 
                                                         <div class="__content">
-                                                            <h4 class="h6 __title"><a href="#"><?php echo $related_product->product_name; ?></a></h4>
+                                                            <h4 class="h6 __title"><a href="landing_product?view=<?php echo $related_product->farmer_product_id; ?>&cat=<?php echo $related_product->category_id; ?>"><?php echo $related_product->product_name; ?></a></h4>
 
                                                             <div class="__category"><a href="#"><?php echo $related_product->category_name; ?></a></div>
                                                             <div class="__category"><a href="#">Farmer: <?php echo $related_product->farmer_name; ?></a></div>
