@@ -129,7 +129,6 @@ require_once('../partials/head.php');
                                             Customer Details
                                         </h3>
                                     </div><!-- /.card-header -->
-
                                     <!-- /.nav-tabs-custom -->
                                     <?php
                                     $ret = "SELECT * FROM  `order` o 
