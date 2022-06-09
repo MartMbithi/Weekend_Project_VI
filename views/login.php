@@ -25,23 +25,35 @@ if (isset($_POST['register'])) {
         $farmer_address = mysqli_real_escape_string($mysqli, $_POST['farmer_address']);
         $farmer_login_id = mysqli_real_escape_string($mysqli, $sys_gen_id);
         $login_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['login_password'])));
-
-        /*  Persist */
-        $sql = "INSERT INTO farmer(farmer_name, farmer_email, farmer_phone, farmer_address, farmer_login_id) 
-        VALUES('{$farmer_name}', '{$farmer_email}', '{$farmer_phone}', '{$farmer_address}', '{$farmer_login_id}')";
-        $auth = "INSERT INTO login(login_id, login_name, login_password, login_rank)
-        VALUES('{$farmer_login_id}', '{$farmer_email}', '{$login_password}', '{$login_rank}')";
-
-        $prepare = $mysqli->prepare($sql);
-        $auth_prepare = $mysqli->prepare($auth);
-
-        $auth_prepare->execute();
-        $prepare->execute();
-
-        if ($prepare && $auth_prepare) {
-            $success = "Account Created Successfully";
+        /* Prevent Double Entries */
+        $sql = "SELECT * FROM  farmer   WHERE farmer_email ='{$farmer_email}' || farmer_phone = '{$farmer_phone}' ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if (
+                $farmer_phone == $row['farmer_phone'] ||
+                $farmer_email == $row['farmer_email']
+            ) {
+                $err = 'Account With That Phone Number Or Email  Already Exists';
+            }
         } else {
-            $err = "Failed!, Please Try Again";
+            /*  Persist */
+            $sql = "INSERT INTO farmer(farmer_name, farmer_email, farmer_phone, farmer_address, farmer_login_id) 
+            VALUES('{$farmer_name}', '{$farmer_email}', '{$farmer_phone}', '{$farmer_address}', '{$farmer_login_id}')";
+            $auth = "INSERT INTO login(login_id, login_name, login_password, login_rank)
+            VALUES('{$farmer_login_id}', '{$farmer_email}', '{$login_password}', '{$login_rank}')";
+
+            $prepare = $mysqli->prepare($sql);
+            $auth_prepare = $mysqli->prepare($auth);
+
+            $auth_prepare->execute();
+            $prepare->execute();
+
+            if ($prepare && $auth_prepare) {
+                $success = "Account Created Successfully";
+            } else {
+                $err = "Failed!, Please Try Again";
+            }
         }
     } else {
         /* Process Customer Details */
@@ -51,22 +63,35 @@ if (isset($_POST['register'])) {
         $customer_login_id  = mysqli_real_escape_string($mysqli, $sys_gen_id_alt_1);
         $login_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['login_password'])));
 
-        /* Persist */
-        $sql = "INSERT INTO customer (customer_name, customer_phone, customer_email, customer_login_id)
-        VALUES('{$customer_name}', '{$customer_phone}', '{$customer_email}', '{$customer_login_id}')";
-        $auth = "INSERT INTO login(login_id, login_name, login_password, login_rank)
-        VALUES('{$customer_login_id}', '{$customer_email}', '{$login_password}', '{$login_rank}')";
-
-        $prepare = $mysqli->prepare($sql);
-        $auth_prepare = $mysqli->prepare($auth);
-
-        $auth_prepare->execute();
-        $prepare->execute();
-
-        if ($prepare && $auth_prepare) {
-            $success = "Account Created Successfully";
+        /* Prevent Double Entries */
+        $sql = "SELECT * FROM  customer   WHERE customer_email ='{$customer_email}' || customer_phone = '{$customer_phone}' ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if (
+                $customer_phone == $row['customer_phone'] ||
+                $customer_email == $row['customer_email']
+            ) {
+                $err = 'Account With That Phone Number Or Email  Already Exists';
+            }
         } else {
-            $err = "Failed!, Please Try Again";
+            /* Persist */
+            $sql = "INSERT INTO customer (customer_name, customer_phone, customer_email, customer_login_id)
+            VALUES('{$customer_name}', '{$customer_phone}', '{$customer_email}', '{$customer_login_id}')";
+            $auth = "INSERT INTO login(login_id, login_name, login_password, login_rank)
+            VALUES('{$customer_login_id}', '{$customer_email}', '{$login_password}', '{$login_rank}')";
+
+            $prepare = $mysqli->prepare($sql);
+            $auth_prepare = $mysqli->prepare($auth);
+
+            $auth_prepare->execute();
+            $prepare->execute();
+
+            if ($prepare && $auth_prepare) {
+                $success = "Account Created Successfully";
+            } else {
+                $err = "Failed!, Please Try Again";
+            }
         }
     }
 }
@@ -106,7 +131,7 @@ if (isset($_POST['login'])) {
 require_once('../partials/head.php');
 ?>
 
-<body class="hold-transition login-page" style="background-image: url('../public/images/background.jpg'); background-repeat: no-repeat; background-size: cover; ">
+<body class="hold-transition login-page" style="background-image: url('../public/images/landing/img_9.jpg'); background-repeat: no-repeat; background-size: cover; ">
     <div class="login-box">
         <div class="login-logo">
             <a href="" class="text-light"><b>Online Farmers Market Platform</a>
