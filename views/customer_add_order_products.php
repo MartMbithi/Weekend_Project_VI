@@ -172,17 +172,17 @@ require_once('../partials/head.php');
                                             </div>
                                             <?php
                                             $product_array = $db_handle->runQuery("SELECT * FROM products p INNER JOIN farmer_products fp 
-                                        ON fp.farmer_product_product_id = p.product_id ORDER BY p.product_name ASC");
+                                                ON fp.farmer_product_product_id = p.product_id ORDER BY p.product_name ASC");
                                             if (!empty($product_array)) {
                                                 foreach ($product_array as $key => $value) {
                                             ?>
-                                                    <div class="col-4">
+                                                    <div class="col-4 Product_Name">
                                                         <form method="post" action="customer_add_order_products?ref=<?php echo $_GET['ref']; ?>&action=add&product_name=<?php echo $product_array[$key]["product_name"]; ?>">
                                                             <div class="card">
                                                                 <img src="../public/images/products/<?php echo $product_array[$key]["farmer_product_image"]; ?>" class="card-img-top" style="width:100%; height:10vw; object-fit: cover;">
                                                                 <div class="card-body">
                                                                     <h6>
-                                                                        <?php echo $product_array[$key]["product_name"]; ?> <br>
+                                                                        <span><?php echo $product_array[$key]["product_name"]; ?></span> <br>
                                                                         <?php echo "Ksh" . number_format($product_array[$key]["farmer_product_price"], 2); ?> <br>
                                                                     </h6>
                                                                 </div>
@@ -302,6 +302,7 @@ require_once('../partials/head.php');
     </div>
     <!-- ./wrapper -->
     <?php require_once('../partials/scripts.php'); ?>
+    <?php require_once('../partials/filter_js.php'); ?>
 </body>
 
 
