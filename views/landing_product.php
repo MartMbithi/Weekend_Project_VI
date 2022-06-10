@@ -73,8 +73,16 @@ include('../partials/landing_head.php');
                                                 </div>
                                                 <br>
                                                 <div class="__categories">
-                                                    Farmer:
+                                                    Farmer Name:
                                                     <span><?php echo $product->farmer_name; ?></span>
+                                                </div>
+                                                <div class="__categories">
+                                                    Farmer Email:
+                                                    <span><?php echo $product->farmer_email; ?></span>
+                                                </div>
+                                                <div class="__categories">
+                                                    Farmer Contacts:
+                                                    <span><?php echo $product->farmer_phone; ?></span>
                                                 </div>
 
                                                 <div class="product-price">
@@ -133,9 +141,10 @@ include('../partials/landing_head.php');
 
                                                         <div class="__content">
                                                             <h4 class="h6 __title"><a href="landing_product?view=<?php echo $related_product->farmer_product_id; ?>&cat=<?php echo $related_product->category_id; ?>"><?php echo $related_product->product_name; ?></a></h4>
-
                                                             <div class="__category"><a href="#"><?php echo $related_product->category_name; ?></a></div>
-                                                            <div class="__category"><a href="#">Farmer: <?php echo $related_product->farmer_name; ?></a></div>
+                                                            <div class="__category"><a href="#">Farmer Name: <?php echo $related_product->farmer_name; ?></a></div>
+                                                            <div class="__category"><a href="#">Farmer Contacts: <?php echo $related_product->farmer_phone; ?></a></div>
+
                                                             <div class="product-price">
                                                                 <span class="product-price__item product-price__item--new"><?php echo number_format($related_product->farmer_product_price, 2); ?></span>
                                                             </div>
