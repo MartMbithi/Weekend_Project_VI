@@ -72,8 +72,19 @@ require_once('../partials/landing_head.php');
                                                         <div class="__content">
                                                             <h4 class="h6 __title"><a href="landing_product?view=<?php echo $product->farmer_product_id; ?>&cat=<?php echo $product->category_id; ?>"><?php echo $product->product_name; ?></a></h4>
 
-                                                            <div class="__category"><a href="#"><?php echo $product->category_name; ?></a></div>
-
+                                                            <div class="__category"><a href="#">Category: <?php echo $product->category_name; ?></a></div>
+                                                            <div class="__category">
+                                                                Farmer Name:
+                                                                <span><?php echo $product->farmer_name; ?></span>
+                                                            </div>
+                                                            <div class="__category">
+                                                                Farmer Email:
+                                                                <span><?php echo $product->farmer_email; ?></span>
+                                                            </div>
+                                                            <div class="__category">
+                                                                Farmer Contacts:
+                                                                <span><?php echo $product->farmer_phone; ?></span>
+                                                            </div>
                                                             <div class="product-price">
                                                                 <span class="product-price__item product-price__item--new">Ksh <?php echo number_format($product->farmer_product_price, 2); ?></span>
                                                             </div>
